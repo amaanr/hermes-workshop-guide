@@ -7,10 +7,10 @@ Static HTML, CSS, and JavaScript. No build step or backend. Vercel deploys `main
 ## Content
 
 - `index.html`: welcome, instructors, helper names, live build brief.
-- `app.js`: five Mac/Windows pre-work steps, help answers, navigation and local completion checkmarks.
-- `styles.css`: responsive layout and summit-derived graphite, electric-blue, and lime palette.
-- `assets/amaan.webp` and `assets/nadim.webp`: user-provided headshots. Amaan is in the grey sweater; Nadim is in the black T-shirt.
-- `assets/summit-logo.png`: official logo from the linked summit guide, reused with the organizer's permission in this request.
+- `app.js`: five Mac/Windows pre-work steps as a collapse/expand accordion (only the first-incomplete step opens by default), help answers, navigation, and local completion checkmarks.
+- `styles.css`: responsive layout in a warm editorial palette — cream paper, terracotta, deep teal — with Fraunces (serif display) + Inter, modeled on the Module 1 deck.
+- `assets/amaan.webp` and `assets/nadim.webp`: user-provided headshots, cropped face-centered so the avatar stack aligns. Amaan is in the grey sweater; Nadim is in the black T-shirt.
+- `assets/summit-logo-ink.png` / `-rust.png` / `-white.png`: the official summit maple-leaf wordmark, recolored from the original white knockout (`summit-logo.png`) via its alpha mask for use on light and dark backgrounds. Reused with the organizer's permission for this request.
 
 ## Add the real screenshots
 

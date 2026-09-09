@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#202226" />
+    <meta name="theme-color" content="#9e3b28" />
     <title>Build with AI | IPN AI Youth Summit 2026</title>
     <meta
       name="description"
-      content="Your workshop home. Get set up, meet your instructors, and build a personal opportunity briefing. Intermediate / Advanced. September 12, 3–4 PM ET, Social Hall."
+      content="Your workshop home. Get set up at your own pace, meet your instructors, and build a personal opportunity briefing. Intermediate / Advanced · September 12 · 3–4 PM ET · Social Hall."
     />
     <meta property="og:title" content="Build with AI. Build your next move." />
     <meta
@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -52,11 +52,9 @@
       <symbol id="i-code" viewBox="0 0 24 24">
         <path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-14-2 18" />
       </symbol>
-      <symbol id="i-grid" viewBox="0 0 24 24">
-        <rect x="4" y="4" width="6" height="6" rx="1" />
-        <rect x="14" y="4" width="6" height="6" rx="1" />
-        <rect x="4" y="14" width="6" height="6" rx="1" />
-        <rect x="14" y="14" width="6" height="6" rx="1" />
+      <symbol id="i-compass" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="m15 9-2 5-4 1 2-5z" />
       </symbol>
       <symbol id="i-laptop" viewBox="0 0 24 24">
         <rect x="5" y="4" width="14" height="12" rx="1.5" />
@@ -87,6 +85,14 @@
         <rect x="5" y="10" width="14" height="11" rx="2" />
         <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2" />
       </symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24">
+        <path
+          d="M12 20s-7-4.5-9-9c-1.3-3 .5-6 3.5-6 2 0 3.5 1.5 5.5 3.5C14 6.5 15.5 5 17.5 5c3 0 4.8 3 3.5 6-2 4.5-9 9-9 9Z"
+        />
+      </symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24">
+        <path d="M12 5v14M5 12h14" />
+      </symbol>
     </svg>
 
     <aside class="sidebar">
@@ -98,38 +104,36 @@
         aria-label="Open the IPN AI Youth Summit conference guide"
       >
         <img
-          src="assets/summit-logo.png"
+          src="assets/summit-logo-ink.png"
           alt="IPN AI Youth Summit 2026"
           width="400"
           height="128"
         />
       </a>
-      <div class="sidebar-caption">THE WORKSHOP COMPANION</div>
+      <div class="sidebar-caption">The workshop companion</div>
       <nav class="main-nav" aria-label="Workshop navigation">
         <a href="#home" data-nav="home" aria-current="page"
-          ><svg class="icon"><use href="#i-grid" /></svg><span>Welcome</span
-          ><small>01</small></a
+          ><svg class="icon"><use href="#i-compass" /></svg
+          ><span>Welcome</span></a
         >
         <a href="#setup" data-nav="setup"
-          ><svg class="icon"><use href="#i-laptop" /></svg><span>Pre-work</span
-          ><small>02</small></a
+          ><svg class="icon"><use href="#i-laptop" /></svg
+          ><span>Get set up</span></a
         >
         <a href="#workshop" data-nav="workshop"
-          ><svg class="icon"><use href="#i-code" /></svg><span>In the room</span
-          ><small>03</small></a
+          ><svg class="icon"><use href="#i-code" /></svg
+          ><span>In the room</span></a
         >
         <a href="#help" data-nav="help"
-          ><svg class="icon"><use href="#i-help" /></svg><span>Help desk</span
-          ><small>04</small></a
+          ><svg class="icon"><use href="#i-help" /></svg
+          ><span>Help desk</span></a
         >
       </nav>
       <div class="sidebar-bottom">
-        <div class="session-stamp">
-          <span class="live-dot"></span> YOUR SESSION
-        </div>
+        <div class="session-stamp">Your session</div>
         <p>Saturday, September 12</p>
-        <strong>3:00–4:00 PM ET</strong>
-        <span class="sidebar-room">Social Hall · Toronto</span>
+        <strong>3:00–4:00 PM</strong>
+        <span class="sidebar-room">Social Hall · Toronto · ET</span>
         <a
           class="conference-link"
           href="https://ipn-ai-youth-summit-guide.zainpunjwani.chatgpt.site/"
@@ -143,359 +147,368 @@
     <div class="workspace">
       <header class="topbar">
         <div class="breadcrumb">
-          BUILD WITH AI <span>/</span> <span id="current-view">Welcome</span>
+          Build with AI <span class="crumb-sep">/</span>
+          <span id="current-view">Welcome</span>
         </div>
-        <span class="track-badge"><span></span> Intermediate / Advanced</span>
+        <span class="track-badge">Intermediate / Advanced</span>
       </header>
       <main id="main" tabindex="-1">
+        <!-- WELCOME -->
         <section class="view" id="home-view" aria-labelledby="home-title">
-          <div class="welcome-top">
-            <span class="eyebrow">YOUR NEXT MOVE STARTS HERE</span
-            ><span class="edition">12.09.26 / TORONTO</span>
-          </div>
           <div class="hero">
             <div class="hero-copy">
-              <span class="hero-label"
-                ><svg class="icon"><use href="#i-code" /></svg> A HANDS-ON BUILD
-                SESSION</span
+              <span class="hero-kicker"
+                >IPN AI Youth Summit · Build with AI</span
               >
               <h1 id="home-title">
-                Build with AI.<br />Build your<br /><span>next move.</span>
+                Build with AI.<br />Build your <em>next move.</em>
               </h1>
-              <p>
-                Turn a starter bot into a personal opportunity briefing.
-                Companies, news, roles, and people in a sector you care about.
+              <p class="hero-lede">
+                In one hour you'll take a small starter bot and turn it into a
+                personal opportunity briefing — for a field <em>you</em> care
+                about.
               </p>
-              <a class="button button-lime" href="#setup"
-                >Get ready for the workshop
-                <svg class="icon"><use href="#i-arrow" /></svg
-              ></a>
-              <a class="instructor-byline" href="#crew">
-                <span class="avatar-stack"
-                  ><img
-                    src="assets/amaan.webp"
-                    alt="Amaan Rattansi"
-                    width="44"
-                    height="44" /><img
-                    src="assets/nadim.webp"
-                    alt="Nadim Nasser"
-                    width="44"
-                    height="44"
-                /></span>
-                <span
-                  ><small>YOUR INSTRUCTORS</small
-                  ><strong>Amaan Rattansi &amp; Nadim Nasser</strong></span
-                >
-                <svg class="icon"><use href="#i-external" /></svg>
-              </a>
-            </div>
-            <div
-              class="hero-visual"
-              aria-label="Workshop goal: build your own opportunity briefing"
-            >
-              <div class="orbit-label">
-                FROM AN IDEA<span>TO SOMETHING YOU CAN USE</span>
-              </div>
-              <div class="brief-sheet">
-                <div class="sheet-top">
-                  <span class="sheet-symbol">h.</span
-                  ><span>HERMES<br />YOUR OPPORTUNITY BRIEF</span
-                  ><span class="sheet-index">01</span>
-                </div>
-                <h2>Your world.<br />A little clearer.</h2>
-                <p>One sector. Your next move.</p>
-                <div class="sheet-row">
-                  <span>01</span><strong>Companies to watch</strong
-                  ><svg class="icon"><use href="#i-external" /></svg>
-                </div>
-                <div class="sheet-row">
-                  <span>02</span><strong>Signals worth your time</strong
-                  ><svg class="icon"><use href="#i-external" /></svg>
-                </div>
-                <div class="sheet-row">
-                  <span>03</span><strong>Roles &amp; people to explore</strong
-                  ><svg class="icon"><use href="#i-external" /></svg>
-                </div>
-                <div class="sheet-foot">
-                  <span class="live-dot"></span> THE THING YOU'LL BUILD
-                </div>
-              </div>
-              <div class="build-sticker">
-                <svg class="icon"><use href="#i-code" /></svg
-                ><span
-                  >LESS WATCHING.<br /><strong>MORE BUILDING.</strong></span
+              <div class="hero-actions">
+                <a class="button button-solid" href="#setup"
+                  >Start getting set up
+                  <svg class="icon"><use href="#i-arrow" /></svg
+                ></a>
+                <a class="button button-quiet" href="#workshop"
+                  >See what we'll build</a
                 >
               </div>
             </div>
-            <div class="hero-session">
-              <span
-                ><svg class="icon"><use href="#i-clock" /></svg> September 12 ·
-                3–4 PM ET</span
-              ><span
-                ><svg class="icon"><use href="#i-pin" /></svg> Social Hall</span
-              ><span
-                >Bring your laptop
-                <svg class="icon"><use href="#i-laptop" /></svg
-              ></span>
+            <aside class="hero-card" aria-label="What you'll walk out with">
+              <span class="hero-card-tag">What you'll walk out with</span>
+              <ol class="hero-card-list">
+                <li><span>01</span> A bot running on your own laptop</li>
+                <li><span>02</span> Your own opportunity briefing</li>
+                <li><span>03</span> The confidence to keep building</li>
+              </ol>
+              <div class="hero-card-foot">
+                <svg class="icon"><use href="#i-heart" /></svg> No experience
+                assumed
+              </div>
+            </aside>
+          </div>
+
+          <div class="fact-row">
+            <div class="fact">
+              <svg class="icon"><use href="#i-clock" /></svg>
+              <div>
+                <strong>3:00–4:00 PM ET</strong><span>Saturday, Sept 12</span>
+              </div>
+            </div>
+            <div class="fact">
+              <svg class="icon"><use href="#i-pin" /></svg>
+              <div><strong>Social Hall</strong><span>Toronto</span></div>
+            </div>
+            <div class="fact">
+              <svg class="icon"><use href="#i-laptop" /></svg>
+              <div>
+                <strong>Bring your laptop</strong><span>Mac or Windows</span>
+              </div>
             </div>
           </div>
 
           <div class="path-cards">
-            <a class="path-card" href="#setup"
-              ><span class="path-icon"
-                ><svg class="icon"><use href="#i-laptop" /></svg
+            <a class="path-card" href="#setup">
+              <span class="path-index">01</span>
+              <h2>Get set up</h2>
+              <p>
+                A calm, step-by-step checklist. Do it before you arrive, or with
+                us at the start.
+              </p>
+              <span class="path-go"
+                >Begin setup <svg class="icon"><use href="#i-arrow" /></svg
               ></span>
-              <div>
-                <span class="eyebrow">BEFORE YOU ARRIVE</span>
-                <h2>A little setup. A head start.</h2>
-                <p>Pick Mac or Windows. Get your tools ready.</p>
-              </div>
-              <svg class="icon path-arrow"><use href="#i-arrow" /></svg
-            ></a>
-            <a class="path-card" href="#workshop"
-              ><span class="path-icon blue"
-                ><svg class="icon"><use href="#i-code" /></svg
+            </a>
+            <a class="path-card" href="#workshop">
+              <span class="path-index">02</span>
+              <h2>In the room</h2>
+              <p>
+                What we're building together, the prompts to start from, and how
+                to know it's working.
+              </p>
+              <span class="path-go"
+                >See the brief <svg class="icon"><use href="#i-arrow" /></svg
               ></span>
-              <div>
-                <span class="eyebrow">WHEN WE'RE TOGETHER</span>
-                <h2>Open laptop. Start building.</h2>
-                <p>Your build brief, prompts, and checkpoints.</p>
-              </div>
-              <svg class="icon path-arrow"><use href="#i-arrow" /></svg
-            ></a>
+            </a>
           </div>
 
           <section class="crew" id="crew" aria-labelledby="crew-title">
-            <div class="section-heading">
+            <div class="section-head">
+              <span class="eyebrow">Your workshop crew</span>
               <h2 id="crew-title">Good people to build with.</h2>
-              <span class="eyebrow">YOUR WORKSHOP CREW</span>
             </div>
-            <div class="instructor-bios">
-              <article>
-                <span class="person-role">INSTRUCTOR</span>
-                <h3>Amaan Rattansi</h3>
-                <p class="person-title">Co-founder &amp; CTO, Scribeberry</p>
-                <p>
-                  Builds at the intersection of healthcare, AI, and user
-                  experience, helping clinicians spend less time on paperwork.
-                </p>
+            <div class="instructors">
+              <article class="instructor">
+                <img
+                  src="assets/amaan.webp"
+                  alt="Amaan Rattansi"
+                  width="72"
+                  height="72"
+                  loading="lazy"
+                />
+                <div>
+                  <span class="person-role">Instructor</span>
+                  <h3>Amaan Rattansi</h3>
+                  <p class="person-title">Co-founder &amp; CTO · Scribeberry</p>
+                  <p class="person-bio">
+                    Builds where healthcare, AI, and design meet — helping
+                    clinicians spend less time on paperwork.
+                  </p>
+                </div>
               </article>
-              <article>
-                <span class="person-role">INSTRUCTOR</span>
-                <h3>Nadim Nasser</h3>
-                <p class="person-title">Founder, AI Build Academy</p>
-                <p>
-                  Teaches practical ways to work with AI, from clearer prompts
-                  to turning an idea into something you can use.
-                </p>
+              <article class="instructor">
+                <img
+                  src="assets/nadim.webp"
+                  alt="Nadim Nasser"
+                  width="72"
+                  height="72"
+                  loading="lazy"
+                />
+                <div>
+                  <span class="person-role">Instructor</span>
+                  <h3>Nadim Nasser</h3>
+                  <p class="person-title">Founder · AI Build Academy</p>
+                  <p class="person-bio">
+                    Teaches practical ways to work with AI — from clearer
+                    prompts to shipping something real.
+                  </p>
+                </div>
               </article>
             </div>
             <div class="helpers">
-              <span class="helpers-label"
-                >HANDS-ON HELP<br /><small
-                  >Find us if you get stuck.</small
-                ></span
-              >
-              <div>
-                <strong>Raheem Mussa</strong
-                ><span>Co-founder, Easy Appointment Booking</span>
-              </div>
-              <div>
-                <strong>Naheed Hirji</strong
-                ><span>Former Head of BD, WhatsApp</span>
-              </div>
-              <div>
-                <strong>Azim Rattansi</strong><span>Technical coach</span>
-              </div>
+              <span class="helpers-label">On the floor to help</span>
+              <ul>
+                <li>
+                  <strong>Raheem Mussa</strong
+                  ><span>Co-founder, Easy Appointment Booking</span>
+                </li>
+                <li>
+                  <strong>Naheed Hirji</strong
+                  ><span>Former Head of BD, WhatsApp</span>
+                </li>
+                <li>
+                  <strong>Azim Rattansi</strong><span>Technical coach</span>
+                </li>
+              </ul>
             </div>
           </section>
+
           <p class="track-note">
-            Looking for the beginner session? Azhar Dewji and Zayan Hussain lead
-            that track in the <strong>Activity Room</strong>. This is the
-            <strong>Intermediate / Advanced</strong> workshop.
+            New here? The beginner session with Azhar Dewji and Zayan Hussain
+            runs in the
+            <strong>Activity Room</strong>. This page is for the
+            <strong>Intermediate / Advanced</strong> track.
           </p>
         </section>
 
+        <!-- SET UP -->
         <section
           class="view"
           id="setup-view"
           aria-labelledby="setup-title"
           hidden
         >
-          <div class="page-heading">
-            <span class="eyebrow">PRE-WORK / YOUR LAPTOP, READY</span>
-            <h1 id="setup-title">Arrive ready to build.</h1>
+          <div class="page-head">
+            <span class="eyebrow">Get set up · at your own pace</span>
+            <h1 id="setup-title">Five small steps. <em>That's it.</em></h1>
             <p>
-              Choose your computer. Follow one step at a time.<br
-                class="desktop-break"
-              />
-              Allow 30–45 minutes, especially for first-time installs.
+              Pick your computer, then open one step at a time. Most people
+              finish in 30–45 minutes — and nothing here can break your laptop.
+            </p>
+          </div>
+          <div class="reassure">
+            <svg class="icon"><use href="#i-heart" /></svg>
+            <p>
+              <strong>It's normal if some of this is new.</strong> Go at your
+              own speed, check things off as you go, and if a step won't budge,
+              leave it — we'll sort it out together in the room.
             </p>
           </div>
           <div id="setup-root"></div>
         </section>
 
+        <!-- WORKSHOP -->
         <section
           class="view"
           id="workshop-view"
           aria-labelledby="workshop-title"
           hidden
         >
-          <div class="page-heading">
-            <span class="eyebrow">SEPTEMBER 12 / 3–4 PM ET / SOCIAL HALL</span>
+          <div class="page-head">
+            <span class="eyebrow">In the room · Sept 12 · 3–4 PM</span>
             <h1 id="workshop-title">
-              From starter bot to<br /><span class="blue-text"
-                >something that's yours.</span
-              >
+              From starter bot to <em>something that's yours.</em>
             </h1>
             <p>
-              Your challenge: a useful opportunity briefing for a sector you
-              care about. We'll build a small, working version first.
+              Your challenge: a useful opportunity briefing for a field you care
+              about. We'll build a small working version first, together.
             </p>
           </div>
-          <div class="workshop-brief">
+          <div class="brief-panel">
             <div>
-              <span class="eyebrow">THE FINISH LINE</span>
-              <h2>A briefing you would<br />actually come back to.</h2>
+              <span class="eyebrow light">The finish line</span>
+              <h2>A briefing you'd actually come back to.</h2>
               <p>
-                Choose a sector. Bring a few articles, job descriptions, or
-                company notes. Help your bot turn that material into a clear
-                next step.
+                Choose a field. Bring a few articles, job posts, or company
+                notes. Help your bot turn that into a clear next step.
               </p>
             </div>
-            <div class="outcome-list">
-              <span><b>01</b> Companies &amp; industry signals</span
-              ><span><b>02</b> Roles, internships &amp; events</span
-              ><span><b>03</b> People to learn from</span
-              ><span><b>04</b> One action to take next</span>
-            </div>
+            <ol class="brief-outcomes">
+              <li><span>01</span> Companies &amp; industry signals</li>
+              <li><span>02</span> Roles, internships &amp; events</li>
+              <li><span>03</span> People to learn from</li>
+              <li><span>04</span> One action to take next</li>
+            </ol>
           </div>
-          <div class="session-notice">
-            <svg class="icon"><use href="#i-help" /></svg>
+          <div class="reassure calm">
+            <svg class="icon"><use href="#i-compass" /></svg>
             <p>
-              <strong>Start with real source material.</strong> Hermes starts as
-              a chat bot, not a web researcher. Use pasted text first. Live
-              search and scheduled briefings are stretch features, not built
-              into the starter.
+              <strong>Start with real material you bring.</strong> Hermes begins
+              as a chat bot, not a web researcher. Paste in your own text first.
+              Live search and scheduled briefings are stretch goals, not part of
+              the starter.
             </p>
           </div>
           <div class="build-flow">
             <article>
-              <span class="build-number">01 / UNDERSTAND</span>
+              <span class="build-step">Step 01 · Understand</span>
               <h2>Get your bearings.</h2>
               <p>
-                Open your <code>hermes-bot</code> folder in OpenChamber. Ask it
-                to explain the project before changing anything.
+                Open your <code>hermes-bot</code> folder in OpenChamber and ask
+                it to explain the project before changing anything.
               </p>
               <div class="command prompt">
                 <div class="command-top">
-                  <span>PASTE IN YOUR CODING ASSISTANT</span
+                  <span>Paste in your coding assistant</span
                   ><button
                     class="copy-button"
                     type="button"
-                    aria-label="Copy orientation prompt"
+                    aria-label="Copy the orientation prompt"
                   >
-                    Copy
+                    <svg class="icon"><use href="#i-copy" /></svg> Copy
                   </button>
                 </div>
                 <pre><code>Read this project and explain how a message travels from the browser to OpenAI and back. Point out where the bot's instructions live. Don't change any files yet.</code></pre>
               </div>
             </article>
             <article>
-              <span class="build-number">02 / BUILD</span>
+              <span class="build-step">Step 02 · Build</span>
               <h2>Make one useful change.</h2>
               <p>
-                Start with an input for your sector and source material. Keep
-                the first version small enough to test.
+                Add inputs for your field and source material. Keep this first
+                version small enough to test quickly.
               </p>
               <div class="command prompt">
                 <div class="command-top">
-                  <span>PASTE IN YOUR CODING ASSISTANT</span
+                  <span>Paste in your coding assistant</span
                   ><button
                     class="copy-button"
                     type="button"
-                    aria-label="Copy build prompt"
+                    aria-label="Copy the build prompt"
                   >
-                    Copy
+                    <svg class="icon"><use href="#i-copy" /></svg> Copy
                   </button>
                 </div>
                 <pre><code>Turn Hermes into a personal opportunity briefing tool.
-Add inputs for my sector, goal, and pasted source material.
+Add inputs for my field, goal, and pasted source material.
 Produce a brief with companies, opportunities, people, and one next action.
 Use only the material I provide. Link sources only when I include their URLs. Say when information is missing; don't invent jobs, people, dates, or citations.
 Keep the API key on the server. Propose a small plan first, then help me implement and test it.</code></pre>
               </div>
             </article>
-            <article class="test-build">
-              <span class="build-number">03 / TEST &amp; SHARE</span>
+            <article>
+              <span class="build-step">Step 03 · Test &amp; share</span>
               <h2>Make it work. Then make it better.</h2>
               <p>
-                Restart the server after backend changes, refresh your browser,
-                and check a real example.
+                Restart the server after backend changes, refresh the browser,
+                and try a real example.
               </p>
               <div class="test-checks">
                 <label
-                  ><input type="checkbox" /> My brief uses the source material I
-                  gave it.</label
-                ><label
-                  ><input type="checkbox" /> Missing information is flagged, not
-                  made up.</label
-                ><label
+                  ><input type="checkbox" /> My brief uses the material I gave
+                  it.</label
+                >
+                <label
+                  ><input type="checkbox" /> Missing info is flagged, not made
+                  up.</label
+                >
+                <label
                   ><input type="checkbox" /> I can show one useful next
                   action.</label
                 >
               </div>
               <p class="small-copy">
-                Then try conversation memory, saving a brief, or adding live
-                retrieval with source links. Pick one, not all three.
+                Feeling good? Try one stretch goal — conversation memory, saving
+                a brief, or live retrieval with sources. Pick one, not all
+                three.
               </p>
             </article>
           </div>
           <div class="tool-note">
             <svg class="icon"><use href="#i-code" /></svg>
             <div>
-              <strong>Your editor. Your choice.</strong>
+              <strong>Your editor, your choice.</strong>
               <p>
-                We'll demo OpenChamber. Cursor, Claude Code, Codex, Antigravity,
-                or another coding assistant are welcome. Their own access or
-                subscription may be required; a shared OpenAI key won't
-                automatically unlock every tool.
+                We'll demo OpenChamber, but Cursor, Claude Code, Codex, or
+                Antigravity are all welcome. Some tools need their own access or
+                subscription — a shared OpenAI key won't automatically unlock
+                every one.
               </p>
             </div>
           </div>
         </section>
 
+        <!-- HELP -->
         <section
           class="view"
           id="help-view"
           aria-labelledby="help-title"
           hidden
         >
-          <div class="page-heading">
-            <span class="eyebrow">HELP DESK / NO NEED TO SPIN YOUR WHEELS</span>
-            <h1 id="help-title">Let's get you unstuck.</h1>
+          <div class="page-head">
+            <span class="eyebrow">Help desk · you're not stuck for long</span>
+            <h1 id="help-title">Let's get you <em>unstuck.</em></h1>
             <p>
-              Check the quick fixes below. In the room, raise your hand and
-              we'll come to you.
+              Most snags have a quick fix below. In the room, just raise your
+              hand — someone will come to you.
             </p>
           </div>
           <div class="help-crew">
-            <span class="help-mark"
-              ><svg class="icon"><use href="#i-help" /></svg
-            ></span>
+            <span class="avatar-stack">
+              <img
+                src="assets/amaan.webp"
+                alt=""
+                width="46"
+                height="46"
+                aria-hidden="true"
+              />
+              <img
+                src="assets/nadim.webp"
+                alt=""
+                width="46"
+                height="46"
+                aria-hidden="true"
+              />
+            </span>
             <div>
-              <strong>Raheem, Naheed &amp; Azim are here to help.</strong>
+              <strong>Raheem, Naheed &amp; Azim are on the floor.</strong>
               <p>
-                Have your current step and the exact error ready. Hide your API
-                key before sharing your screen.
+                Have your current step and the exact message ready. Hide your
+                API key before sharing your screen.
               </p>
             </div>
           </div>
           <div class="faq-list" id="faq-list"></div>
           <div class="help-links">
-            <a class="button button-blue" href="#setup"
-              >Back to setup <svg class="icon"><use href="#i-arrow" /></svg></a
-            ><a
+            <a class="button button-solid" href="#setup"
+              >Back to setup <svg class="icon"><use href="#i-arrow" /></svg
+            ></a>
+            <a
+              class="link-quiet"
               href="https://docs.openchamber.dev/"
               target="_blank"
               rel="noopener"
@@ -504,22 +517,26 @@ Keep the API key on the server. Propose a small plan first, then help me impleme
             ></a>
           </div>
         </section>
-        <noscript
-          ><div class="session-notice">
-            JavaScript is needed for the interactive setup guide. You can also
-            follow the
+
+        <noscript>
+          <div class="reassure">
+            JavaScript is needed for the interactive setup checklist. You can
+            also follow the
             <a href="https://github.com/amaanr/hermes-bot"
               >starter repository README</a
             >
             after accepting your private repository invitation.
-          </div></noscript
-        >
+          </div>
+        </noscript>
       </main>
       <footer class="site-footer">
+        <img
+          src="assets/summit-logo-ink.png"
+          alt="IPN AI Youth Summit 2026"
+          width="200"
+          height="64"
+        />
         <span
-          >IPN AI Youth Summit 2026 <span class="footer-dot">·</span> Build with
-          AI</span
-        ><span
           >Made for building, together.
           <a
             href="https://ipn-ai-youth-summit-guide.zainpunjwani.chatgpt.site/"
