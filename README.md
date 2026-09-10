@@ -20,14 +20,15 @@ Add a cropped, compressed screenshot under `assets/`. In `app.js`, change its en
 'mac-editor': 'assets/mac-editor.webp',
 ```
 
-The placeholder becomes an image automatically. Slots exist for both OS installations, the repository, .env on each OS, provider settings, and the running bot. Hide all real keys and personal data in screenshots. Do not substitute simulated bot replies for proof of a working API connection.
+The placeholder becomes an image automatically. Slots exist for the basics install (`mac-tools`/`windows-tools`), the Hermes install (`mac-hermes`/`windows-hermes`), the editor (`mac-editor`/`windows-editor`), the connected repo (`repo`), and the running bot (`running`). Hide all real keys and personal data in screenshots. Do not substitute simulated bot replies for proof of a working connection.
 
 ## Workshop checks
 
 - The starter at https://github.com/amaanr/hermes-bot is private. Arrange attendee access or explicitly approve a visibility change before the workshop. This site does not grant access.
-- Share the OpenAI key privately. Never put it into this website or repository. Use limited workshop credentials and revoke them after the event.
-- The Node starter is a chat bot. Opportunity briefings are the live build goal; live search and scheduling are stretch features, not existing features.
-- A native Windows dry run and a real OpenAI-key test of the bot are still needed. Website/browser tests do not validate those environments.
+- The bot is a web chat UI in front of a **local Hermes agent** (Hermes runs on the attendee's laptop; the app talks to it via Hermes's api_server). At home it uses a free, no-sign-up model (`opencode-free`); `npm run setup` wires this up automatically.
+- Share the OpenAI key privately at the workshop. Never put it into this website or repository. Use limited workshop credentials and revoke them after the event. Switching to it is `hermes model` — no code change.
+- The starter is a chat bot. Opportunity briefings are the live build goal; live search and scheduling are stretch features Hermes can grow into, not existing starter features.
+- A native Windows dry run is still needed. The Mac path (install → setup → gateway → web app) has been tested end-to-end. Website/browser tests do not validate the bot's runtime.
 - Completion checkmarks are self-reported and saved only in the attendee's current browser. No keys or attendee information are collected.
 
 ## Sources

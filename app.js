@@ -23,12 +23,11 @@ const linkButton = (href, text) =>
 const screenshots = {
   "mac-tools": null,
   "windows-tools": null,
+  "mac-hermes": null,
+  "windows-hermes": null,
   "mac-editor": null,
   "windows-editor": null,
   repo: null,
-  "mac-key": null,
-  "windows-key": null,
-  provider: null,
   running: null,
 };
 function screenshot(id, title, caption) {
@@ -45,19 +44,19 @@ const stages = [
     time: "10–15 min",
   },
   {
+    title: "Install Hermes",
+    sub: "Your AI agent — it runs on your own laptop",
+    time: "5–10 min",
+  },
+  {
     title: "Set up your editor",
     sub: "OpenCode, then the OpenChamber app",
     time: "5–10 min",
   },
   {
     title: "Get the starter code",
-    sub: "Copy the project onto your laptop",
-    time: "5 min",
-  },
-  {
-    title: "Add your OpenAI key",
-    sub: "One key, two quick places",
-    time: "5 min",
+    sub: "Copy the project and connect it to Hermes",
+    time: "5–10 min",
   },
   {
     title: "Run it and see it work",
@@ -93,7 +92,21 @@ function stageContent(os, step) {
     );
   if (step === 2)
     return (
-      `<p class="step-lede">Two small pieces: <strong>OpenCode</strong> is the engine, <strong>OpenChamber</strong> is the friendly app on top. Install them in that order.</p>` +
+      `<p class="step-lede">Hermes is your AI agent — it runs on <strong>your own laptop</strong> and remembers what you work on. This one download is the slow part, so please do it at home.</p>` +
+      instruction(
+        "A",
+        "Run the one-line installer",
+        `<p>Paste this into ${mac ? "Terminal" : "PowerShell"} and press ${mac ? "Return" : "Enter"}. It sets up everything Hermes needs — give it a few minutes.</p>${command(shell, mac ? "curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash" : "iex (irm https://hermes-agent.nousresearch.com/install.ps1)")}${mac ? `<p>When it finishes, reload your terminal:</p>${command(shell, "source ~/.zshrc")}` : "<p>When it finishes, close and reopen PowerShell.</p>"}`,
+      ) +
+      instruction(
+        "B",
+        "Check it installed",
+        `<p>Run:</p>${command(shell, "hermes doctor")}${screenshot(`${os}-hermes`, `${mac ? "macOS" : "Windows"}: Hermes installed`, "A photo of hermes doctor looking happy will go here.")}${miniNote("You don't need to pick a model here — the starter's setup step turns on a <strong>free, no-sign-up</strong> model for you. At the workshop we'll switch to a faster OpenAI model together.")}${checkpoint("hermes doctor runs and reports things look healthy — no red errors.")}`,
+      )
+    );
+  if (step === 3)
+    return (
+      `<p class="step-lede">Two small pieces for editing code with AI: <strong>OpenCode</strong> is the engine, <strong>OpenChamber</strong> is the friendly app on top. Install them in that order.</p>` +
       instruction(
         "A",
         "Install OpenCode",
@@ -105,63 +118,40 @@ function stageContent(os, step) {
         `${linkButton("https://openchamber.dev/download", "Download OpenChamber")}<p>${mac ? "<strong>Apple menu → About This Mac.</strong> An M-series “Chip” → <strong>Apple Silicon</strong>. An Intel processor → <strong>Intel</strong>." : "<strong>Settings → System → About → System type.</strong> x64 processor → <strong>Windows (x64)</strong>. ARM processor → <strong>Windows (arm64)</strong>."}</p><p>${mac ? "Open the .dmg, drag OpenChamber into Applications, and launch it from there." : "Run the .exe installer, then launch OpenChamber."}</p>${screenshot(`${os}-editor`, `${mac ? "Mac" : "Windows"}: pick your build`, "The download buttons and first launch will go here.")}${miniNote("Prefer Cursor, Claude Code, or another assistant? Keep it — you can skip this step. OpenChamber is just what we'll demo.")}${checkpoint("OpenChamber opens without an “OpenCode not found” message — or your own assistant is ready.")}`,
       )
     );
-  if (step === 3)
+  if (step === 4)
     return (
-      `<p class="step-lede">Now grab the project. It's a small, working chat bot — the starting point we build on together.</p>` +
+      `<p class="step-lede">Now grab the project — a small web chat page that talks to your Hermes — and connect the two with one command.</p>` +
       miniNote(
         "<strong>Access first.</strong> The starter repo is private. Sign into GitHub and accept the invitation we share. Seeing a 404 just means access hasn't landed yet — not a broken setup.",
         "guard",
       ) +
       instruction(
         "A",
-        "Open the repository",
-        `${linkButton("https://github.com/amaanr/hermes-bot", "Open the workshop repo")}<p>No invite yet? Reach out before Saturday so we can add you — no need to pay for anything or share a password.</p>`,
-      ) +
-      instruction(
-        "B",
         "Clone it to your laptop",
-        `<p>In ${mac ? "Terminal" : "PowerShell"}, go to the folder you want it in, then run this once:</p>${command(shell, "git clone https://github.com/amaanr/hermes-bot.git\ncd hermes-bot")}<p>If a browser opens, sign into the invited GitHub account. If it asks for a password in the terminal, use the friendlier Desktop route below instead.</p><details class="inline-help"><summary>New to GitHub? Use GitHub Desktop instead →</summary><div><ol><li>Install <a href="https://desktop.github.com/download/" target="_blank" rel="noopener">GitHub Desktop</a> and sign in.</li><li><strong>File → Clone repository → URL</strong>, paste <code>https://github.com/amaanr/hermes-bot</code>, pick a folder, clone.</li><li>Back in ${mac ? "Terminal" : "PowerShell"}, type <code>cd </code> (with a space) and drag the cloned folder in, then press ${mac ? "Return" : "Enter"}.</li><li>Continue below — don't clone twice.</li></ol></div></details>`,
-      ) +
-      instruction(
-        "C",
-        "Install what it needs",
-        `<p>Make sure you're inside <strong>hermes-bot</strong>, then run:</p>${command(shell, `${npm} install`)}${screenshot("repo", "The starter repository", "A shot of the repo and its files will go here.")}${checkpoint("you have a hermes-bot folder with server.js, public, package.json, and .env.example — and install finishes cleanly.")}`,
-      )
-    );
-  if (step === 4)
-    return (
-      `<p class="step-lede">The same workshop key goes in two spots: your bot's settings file, and your editor's provider settings.</p>` +
-      miniNote(
-        "<strong>The one part you finish with us: the key itself.</strong> We share it privately at the workshop, so do everything else beforehand and leave this spot ready to paste into. No ChatGPT subscription needed.",
-        "guard",
-      ) +
-      instruction(
-        "A",
-        "Create your .env file",
-        `<p>From inside <strong>hermes-bot</strong>, run this (it won't overwrite an existing .env):</p>${command(shell, mac ? "cp -n .env.example .env\nopen -e .env" : "if (!(Test-Path .env)) { Copy-Item .env.example .env }\nnotepad .env")}<p>Replace <code>sk-paste-your-key-here</code> with the real key, keeping <code>OPENAI_API_KEY=</code> in front. Save it ${mac ? "with Command + S — keep the name .env." : "with Ctrl + S — keep the name .env, not .env.txt."}</p>${screenshot(`${os}-key`, "Your .env file (key hidden)", "A shot showing where the key goes — redacted — will appear here.")}`,
+        `${linkButton("https://github.com/amaanr/hermes-bot", "Open the workshop repo")}<p>In ${mac ? "Terminal" : "PowerShell"}, go to the folder you want it in, then run this once:</p>${command(shell, "git clone https://github.com/amaanr/hermes-bot.git\ncd hermes-bot")}<details class="inline-help"><summary>New to GitHub? Use GitHub Desktop instead →</summary><div><ol><li>Install <a href="https://desktop.github.com/download/" target="_blank" rel="noopener">GitHub Desktop</a> and sign in.</li><li><strong>File → Clone repository → URL</strong>, paste <code>https://github.com/amaanr/hermes-bot</code>, pick a folder, clone.</li><li>Back in ${mac ? "Terminal" : "PowerShell"}, type <code>cd </code> (with a space) and drag the cloned folder in, then press ${mac ? "Return" : "Enter"}.</li><li>Continue below — don't clone twice.</li></ol></div></details>`,
       ) +
       instruction(
         "B",
-        "Connect your editor to OpenAI",
-        `<p>In OpenChamber: <strong>Settings → Providers → Add provider → OpenAI</strong>, choose <strong>API key</strong>, paste the workshop key, save. Then pick the <strong>OpenAI model we recommend</strong> in the chat model picker — not OpenCode Zen or a ChatGPT login.</p>${screenshot("provider", "Settings → Providers → OpenAI", "The API-key field and model picker will go here.")}${miniNote("<strong>Keep the key private.</strong> It only ever goes in .env and provider settings — never in chat, screenshots, or browser code.", "guard")}${checkpoint("your .env has the key and OpenAI shows as connected in OpenChamber. Two separate spots, both done.")}`,
+        "Install it and connect it to Hermes",
+        `<p>Make sure you're inside <strong>hermes-bot</strong>, then run these two:</p>${command(shell, `${npm} install\n${npm} run setup`)}<p>The setup step turns on your Hermes's built-in API, picks a free model, and links the web app to it — all automatically. No key to paste at home.</p>${screenshot("repo", "The starter, connected", "A shot of npm run setup finishing will go here.")}${miniNote("At the workshop we'll swap in a faster OpenAI model together with a key we share — one command, no code changes.", "guard")}${checkpoint("npm run setup prints “All set!” and lists the two terminals to run next.")}`,
       )
     );
   return (
-    `<p class="step-lede">The finish line: a real reply from your own bot. Let's make sure it actually talks back.</p>` +
+    `<p class="step-lede">The finish line: a real reply from your own bot. Hermes runs in one window, the web app in another.</p>` +
     instruction(
       "A",
-      "Start it up",
-      `<p>Inside <strong>hermes-bot</strong>:</p>${command(shell, `${npm} run dev`)}<p>Look for <strong>“Hermes is running!”</strong> and leave that window open.</p>`,
+      "Start Hermes",
+      `<p>Inside <strong>hermes-bot</strong>, start your agent and leave this window open:</p>${command(shell, "hermes gateway")}<p>Wait until it says its API server is listening.</p>`,
     ) +
     instruction(
       "B",
-      "Say hello",
-      `${linkButton("http://localhost:3000", "Open localhost:3000")}<p>Type <strong>“Reply only with: Hermes is ready.”</strong> and send it. A reply back means your key works — the welcome message alone doesn't count.</p>${screenshot("running", "Hermes replying in your browser", "Your real test conversation will go here.")}`,
+      "Start the web app",
+      `<p>Open a <strong>second</strong> ${mac ? "Terminal" : "PowerShell"} window, go back into <strong>hermes-bot</strong>, and run:</p>${command(shell, `${npm} run dev`)}<p>Look for <strong>“Hermes web app is running!”</strong> and leave it open too.</p>`,
     ) +
     instruction(
       "C",
-      "Open it in your editor",
-      `<p>In OpenChamber, open the <strong>hermes-bot</strong> folder and start a chat. Ask it to explain <code>server.js</code> without changing anything — just to confirm it responds too.</p>${miniNote("<strong>To stop or restart:</strong> press Ctrl + C in the server window, then run the start command again after any change and refresh your browser.")}${checkpoint("you get a real reply from the bot and from your editor. You're ready for Saturday. 🎉")}`,
+      "Say hello",
+      `${linkButton("http://localhost:3000", "Open localhost:3000")}<p>Type <strong>“Reply only with: Hermes is ready.”</strong> and send it. A reply back means everything's wired up — the welcome message alone doesn't count.</p>${miniNote("First reply slow? The free models are shared. The page has a tip for switching to another free one, and the workshop's OpenAI key makes it fast.")}${screenshot("running", "Hermes replying in your browser", "Your real test conversation will go here.")}${checkpoint("you get a real reply in the browser. You're ready for Saturday. 🎉")}`,
     )
   );
 }
@@ -183,9 +173,14 @@ const helpItems = [
     `<p>Close and reopen your terminal after installing, and fully restart OpenChamber if it was open. Then run the version checks again.</p><p>On Mac, install Command Line Tools if <code>git --version</code> asks. On Windows, confirm the installers added the tools to PATH. Ask a helper before changing system settings.</p>`,
   ],
   [
-    "Key",
-    "“No OPENAI_API_KEY found” or the chat errors",
-    `<p>Make sure <code>.env</code> sits inside <code>hermes-bot</code> next to <code>server.js</code>, and isn't <code>.env.txt</code>. Paste the key, save, stop the server (Ctrl + C), start it again.</p><p>Check Wi-Fi. If the key is rejected or out of credit, ask a facilitator — reinstalling or buying ChatGPT won't fix API credits.</p>`,
+    "Hermes",
+    "The page shows “Can't reach Hermes”",
+    `<p>That red bar means your agent isn't running yet. In a separate terminal, inside <code>hermes-bot</code>, run <code>hermes gateway</code> and wait until it says its API server is listening — then reload the page. Leave that window open while you work.</p><p>Never ran <code>npm run setup</code>? Do that once first — it connects the web app to Hermes.</p>`,
+  ],
+  [
+    "Slow",
+    "The first reply takes ages, or errors",
+    `<p>The free at-home models are shared, so speed varies. Switch to another free one — no restart needed: <code>hermes config set model.default mimo-v2.5-free</code>, then send a new message. Run <code>hermes model</code> to see the list.</p><p>At the workshop we add the OpenAI key together, which makes this fast. A slow free model is not a broken setup.</p>`,
   ],
   [
     "Port",
@@ -203,9 +198,9 @@ const helpItems = [
     `<p>First confirm you downloaded the matching build from <a href="https://openchamber.dev/download" target="_blank" rel="noopener">openchamber.dev/download</a>. On Mac, a verified app may offer <strong>System Settings → Privacy &amp; Security → Open Anyway</strong>; Windows may offer <strong>More info → Run anyway</strong>. Don't disable protections or bypass a managed laptop — grab a helper and we'll find a path.</p>`,
   ],
   [
-    "Editor",
-    "The bot works, but my editor won't reply",
-    `<p>They use separate settings. The bot reads <code>.env</code>; OpenChamber uses <strong>Settings → Providers → OpenAI</strong>. Add the key there and pick the recommended OpenAI model. An OpenAI key isn't an OpenCode Zen key.</p>`,
+    "Setup",
+    "“hermes: command not found”",
+    `<p>Close and reopen your terminal after installing Hermes${""} — the installer adds it to your PATH on a fresh shell. On Mac you can also run <code>source ~/.zshrc</code>. Then try <code>hermes doctor</code> again.</p>`,
   ],
 ];
 document.getElementById("faq-list").innerHTML = helpItems
