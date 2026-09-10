@@ -115,7 +115,7 @@ function stageContent(os, step) {
       instruction(
         "A",
         "Open the repository",
-        `${linkButton("https://github.com/amaanr/hermes-bot", "Open the workshop repo")}<p>No invite yet? Finish the other steps and come back — no need to pay for anything or share a password.</p>`,
+        `${linkButton("https://github.com/amaanr/hermes-bot", "Open the workshop repo")}<p>No invite yet? Reach out before Saturday so we can add you — no need to pay for anything or share a password.</p>`,
       ) +
       instruction(
         "B",
@@ -132,7 +132,7 @@ function stageContent(os, step) {
     return (
       `<p class="step-lede">The same workshop key goes in two spots: your bot's settings file, and your editor's provider settings.</p>` +
       miniNote(
-        "<strong>No key yet? Totally fine to pause here.</strong> We'll share it privately in the room. You can finish everything else first — and you don't need a ChatGPT subscription for this.",
+        "<strong>The one part you finish with us: the key itself.</strong> We share it privately at the workshop, so do everything else beforehand and leave this spot ready to paste into. No ChatGPT subscription needed.",
         "guard",
       ) +
       instruction(
@@ -297,7 +297,7 @@ function progressHTML() {
       </div>
       <div class="progress-wrap"><span class="progress-copy"><b>${count}</b> of 5 done</span><div class="progress-track" role="progressbar" aria-label="Setup progress" aria-valuenow="${count}" aria-valuemin="0" aria-valuemax="5"><div class="progress-fill" style="width:${count * 20}%"></div></div></div>
     </div>
-    <div class="all-ready" ${count === 5 ? "" : "hidden"}>${icon("check")} You're all set. Bring your laptop and charger — see you Saturday at 3 PM in the Social Hall.</div>`;
+    <div class="all-ready" ${count === 5 ? "" : "hidden"}>${icon("check")} Setup complete — you're arriving ready. Bring your laptop and charger, and we'll add the key together. See you Saturday at 3 PM in the Social Hall.</div>`;
 }
 
 function buildSetup(openTarget) {
