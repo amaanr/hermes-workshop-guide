@@ -133,7 +133,7 @@ function stageContent(os, step) {
       instruction(
         "B",
         "Install it and connect it to Hermes",
-        `<p>Make sure you're inside <strong>hermes-bot</strong>, then run these two:</p>${command(shell, `${npm} install\n${npm} run setup`)}<p>The setup step turns on your Hermes's built-in API, picks a free model, and links the web app to it — all automatically. No key to paste at home.</p>${screenshot("repo", "The starter, connected", "A shot of npm run setup finishing will go here.")}${miniNote("At the workshop we'll swap in a faster OpenAI model together with a key we share — one command, no code changes.", "guard")}${checkpoint("npm run setup prints “All set!” and lists the two terminals to run next.")}`,
+        `<p>Make sure you're inside <strong>hermes-bot</strong>, then run these two:</p>${command(shell, `${npm} install\n${npm} run setup`)}<p>Finish this before starting <code>hermes gateway</code> in step 5. Setup connects the web app to Hermes and selects a free model if you haven't chosen a provider. No model key to paste at home.</p>${miniNote("<code>API_SERVER_KEY</code> is a local connection password that setup creates for you, not an OpenAI key. Keep it private. The free model needs no provider account; the shared <code>OPENAI_API_KEY</code> comes at the workshop and does not replace this local password.")}${screenshot("repo", "The starter, connected", "A shot of npm run setup finishing will go here.")}${miniNote("At the workshop we'll choose OpenAI API in <code>hermes model</code>, enter the key we share, and restart the gateway. No code changes.", "guard")}${checkpoint(`${npm} run setup prints “All set!” and lists the two terminals to run next.`)}`,
       )
     );
   return (
@@ -141,17 +141,17 @@ function stageContent(os, step) {
     instruction(
       "A",
       "Start Hermes",
-      `<p>Inside <strong>hermes-bot</strong>, start your agent and leave this window open:</p>${command(shell, "hermes gateway")}<p>Wait until it says its API server is listening.</p>`,
+      `<p>Inside <strong>hermes-bot</strong>, start your agent and leave this window open:</p>${command(shell, "hermes gateway")}${miniNote("Startup can include warnings about optional tools you haven't connected. You don't need to wait for a particular log message: leave this window running and continue below. If it exits with an error, stop and check the Help desk rather than ignoring it.")}`,
     ) +
     instruction(
       "B",
       "Start the web app",
-      `<p>Open a <strong>second</strong> ${mac ? "Terminal" : "PowerShell"} window, go back into <strong>hermes-bot</strong>, and run:</p>${command(shell, `${npm} run dev`)}<p>Look for <strong>“Hermes web app is running!”</strong> and leave it open too.</p>`,
+      `<p>Open a <strong>second</strong> ${mac ? "Terminal" : "PowerShell"} window. Type <code>cd </code> followed by a space, drag your <strong>hermes-bot</strong> folder from ${mac ? "Finder" : "File Explorer"} into the window, and press ${mac ? "Return" : "Enter"}. Then run:</p>${command(shell, `${npm} run dev`)}<p>Look for <strong>“Hermes web app is running!”</strong> and leave it open too. This command also checks setup automatically.</p>`,
     ) +
     instruction(
       "C",
       "Say hello",
-      `${linkButton("http://localhost:3000", "Open localhost:3000")}<p>Type <strong>“Reply only with: Hermes is ready.”</strong> and send it. A reply back means everything's wired up — the welcome message alone doesn't count.</p>${miniNote("First reply slow? The free models are shared. The page has a tip for switching to another free one, and the workshop's OpenAI key makes it fast.")}${screenshot("running", "Hermes replying in your browser", "Your real test conversation will go here.")}${checkpoint("you get a real reply in the browser. You're ready for Saturday. 🎉")}`,
+      `${linkButton("http://localhost:3000", "Open localhost:3000")}<p>If you see a “Waiting for Hermes…” bar for a few seconds, that's fine — it clears itself once your agent is reachable, no reload needed. Then type <strong>“Reply only with: Hermes is ready.”</strong> and send it. A reply back means everything's wired up — the welcome message alone doesn't count.</p>${miniNote('First reply slow or still waiting after a minute? Keep both terminal windows open and visit the <a href="#help">Help desk</a>. The free models are shared, so response times and availability vary.')}${screenshot("running", "Hermes replying in your browser", "Your real test conversation will go here.")}${checkpoint("you get a real reply in the browser. You're ready for Saturday. 🎉")}`,
     )
   );
 }
@@ -160,7 +160,7 @@ const helpItems = [
   [
     "Access",
     "The GitHub repo shows 404 or “not found”",
-    `<p>The starter is private. Sign into the invited GitHub account and accept the repository invitation, or ask a facilitator for access. A public guide doesn't make the code public.</p><p>Stuck on terminal sign-in? Use the GitHub Desktop route in <a href="#setup/mac/3" data-setup-step="3">step 3</a>. Never type your normal GitHub password into a Git prompt.</p>`,
+    `<p>The starter is private. Sign into the invited GitHub account and accept the repository invitation, or ask a facilitator for access. A public guide doesn't make the code public.</p><p>Stuck on terminal sign-in? Use the GitHub Desktop route in <a href="#setup/mac/4" data-setup-step="4">step 4</a>. Never type your normal GitHub password into a Git prompt.</p>`,
   ],
   [
     "Windows",
@@ -174,13 +174,13 @@ const helpItems = [
   ],
   [
     "Hermes",
-    "The page shows “Can't reach Hermes”",
-    `<p>That red bar means your agent isn't running yet. In a separate terminal, inside <code>hermes-bot</code>, run <code>hermes gateway</code> and wait until it says its API server is listening — then reload the page. Leave that window open while you work.</p><p>Never ran <code>npm run setup</code>? Do that once first — it connects the web app to Hermes.</p>`,
+    "The page shows “Waiting for Hermes…”",
+    `<p>That bar means the web app can't reach your agent yet. In Terminal 1, run <code>hermes gateway</code> and leave it open. Warnings about optional tools can appear; you don't need to wait for a particular log message. The bar clears on its own when connected.</p><p>Still waiting after a minute? If you started the gateway before setup, press <strong>Ctrl + C</strong> in Terminal 1, follow the setup commands in <a href="#setup/mac/4" data-setup-step="4">step 4</a>, then run <code>hermes gateway</code> again. Leave Terminal 2 running the web app. If the gateway exits with an error or the bar stays, ask a helper with the exact error text; hide all keys before sharing.</p>`,
   ],
   [
     "Slow",
     "The first reply takes ages, or errors",
-    `<p>The free at-home models are shared, so speed varies. Switch to another free one — no restart needed: <code>hermes config set model.default mimo-v2.5-free</code>, then send a new message. Run <code>hermes model</code> to see the list.</p><p>At the workshop we add the OpenAI key together, which makes this fast. A slow free model is not a broken setup.</p>`,
+    `<p>The free at-home models are shared, so speed and availability vary. In a third terminal, run <code>hermes config set model.default mimo-v2.5-free</code>. Then press <strong>Ctrl + C</strong> in Terminal 1 and run <code>hermes gateway</code> again to load the change. Leave the web app running and send a new message.</p><p>If that model is unavailable too, run <code>hermes model</code> and choose <strong>OpenCode Free</strong> to see the current options, then restart the gateway. At the workshop we'll choose OpenAI API together with a key we share.</p>`,
   ],
   [
     "Port",
