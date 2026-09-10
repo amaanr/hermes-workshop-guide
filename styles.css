@@ -684,6 +684,67 @@ main {
   color: var(--ink-soft);
 }
 
+/* Agenda timeline */
+.agenda {
+  padding-top: 40px;
+  margin-bottom: 8px;
+}
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+.timeline li {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 24px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line-soft);
+  position: relative;
+}
+.timeline li:first-child {
+  border-top: 0;
+}
+.tl-time {
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rust);
+  padding-top: 3px;
+}
+.tl-body {
+  position: relative;
+  padding-left: 26px;
+}
+.tl-body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--rust);
+  box-shadow: 0 0 0 4px var(--rust-tint);
+}
+.tl-body h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.tl-body p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 52ch;
+}
+
 .track-note {
   margin-top: 26px;
   font-size: 14px;
@@ -1787,6 +1848,14 @@ main {
   }
   .path-card h2 {
     font-size: 24px;
+  }
+  .timeline li {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 18px 0;
+  }
+  .tl-time {
+    padding-top: 0;
   }
   .instructors {
     grid-template-columns: 1fr;
