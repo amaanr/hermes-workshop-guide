@@ -16,7 +16,7 @@ const prefersReduced = () =>
 const repoIsPrivate = false;
 
 const command = (label, text) =>
-  `<div class="command"><div class="command-top"><span>${escapeHTML(label)}</span><button class="copy-button" type="button" aria-label="Copy: ${escapeHTML(label)} command">${icon("copy")} Copy</button></div><pre><code>${escapeHTML(text)}</code></pre></div>`;
+  `<div class="command"><div class="command-top"><span class="command-label">${icon("code")}${escapeHTML(label)}</span><button class="copy-button" type="button" aria-label="Copy the ${escapeHTML(label)} command">${icon("copy")}<span>Copy</span></button></div><pre><code>${escapeHTML(text)}</code></pre></div>`;
 const miniNote = (text, variant = "") =>
   `<div class="mini-note${variant ? " " + variant : ""}">${icon(variant === "guard" ? "lock" : "compass")}<div>${text}</div></div>`;
 const checkpoint = (text) =>
@@ -24,7 +24,7 @@ const checkpoint = (text) =>
 const instruction = (marker, title, body) =>
   `<div class="instruction"><h4><span class="marker">${marker}</span>${title}</h4>${body}</div>`;
 const linkButton = (href, text) =>
-  `<a class="button button-quiet button-sm" href="${href}" target="_blank" rel="noopener">${text}${icon("external")}</a>`;
+  `<div class="download"><a class="button button-solid button-download" href="${href}" target="_blank" rel="noopener"><span>${text}</span>${icon("external")}</a><span class="download-hint">${icon("external")}Opens in a new tab</span></div>`;
 
 // Set a value to a relative path (e.g. "assets/mac-tools.webp") when a real
 // screenshot is ready. Until then the slot renders nothing, so the steps stay
@@ -78,6 +78,9 @@ function stageContent(os, step) {
   const app = mac ? "Terminal" : "PowerShell";
   const npm = mac ? "npm" : "npm.cmd";
   const enter = mac ? "Return" : "Enter";
+  // Friendly label for terminal blocks: "Paste into Terminal" reads as a
+  // gentle instruction instead of a shouty "TERMINAL" noun.
+  const paste = `Paste into ${app}`;
   if (step === 1)
     return (
       `<p class="step-lede">New to typing commands? No problem. You'll copy a line, paste it, and press ${enter}. Already have Node.js and Git? Skip to <strong>C</strong>.</p>` +
@@ -94,13 +97,13 @@ function stageContent(os, step) {
         "B",
         mac ? "Open Terminal and check for Git" : "Install Git, then open PowerShell",
         mac
-          ? `<p>Press <strong>Command + Space</strong>, type <strong>Terminal</strong>, and press Return. Paste this line and press Return:</p>${command(app, "git --version")}<p>If a box offers to install <strong>Command Line Tools</strong>, click <strong>Install</strong> and let it finish. It can take 10–20 minutes. Already see a version number? You're set.</p>`
+          ? `<p>Press <strong>Command + Space</strong>, type <strong>Terminal</strong>, and press Return. Paste this line and press Return:</p>${command(paste, "git --version")}<p>If a box offers to install <strong>Command Line Tools</strong>, click <strong>Install</strong> and let it finish. It can take 10–20 minutes. Already see a version number? You're set.</p>`
           : `${linkButton("https://git-scm.com/downloads/win", "Download Git for Windows")}<p>Run it and keep every default. Then open the <strong>Start menu</strong>, type <strong>PowerShell</strong>, and open it. No admin mode or WSL needed.</p>`,
       ) +
       instruction(
         "C",
         "Check they're installed",
-        `<p>Close ${app} and open it again so it sees the new tools. Paste all three lines and press ${enter}:</p>${command(app, `node --version\n${npm} --version\ngit --version`)}${mac ? "" : miniNote("We write <code>npm.cmd</code> on Windows so you never have to change PowerShell's script settings. It's the same npm.")}${screenshot(`${os}-tools`, `${mac ? "macOS" : "Windows"}: version check`, "Your three version numbers.")}${checkpoint("you see three version numbers and no “not found”. Node's should be v22.13 or higher.")}`,
+        `<p>Close ${app} and open it again so it sees the new tools. Paste all three lines and press ${enter}:</p>${command(paste, `node --version\n${npm} --version\ngit --version`)}${mac ? "" : miniNote("We write <code>npm.cmd</code> on Windows so you never have to change PowerShell's script settings. It's the same npm.")}${screenshot(`${os}-tools`, `${mac ? "macOS" : "Windows"}: version check`, "Your three version numbers.")}${checkpoint("you see three version numbers and no “not found”. Node's should be v22.13 or higher.")}`,
       )
     );
   if (step === 2)
@@ -119,7 +122,7 @@ function stageContent(os, step) {
       instruction(
         "B",
         "Check it worked",
-        `<p>Run:</p>${command(app, "hermes --version")}${screenshot(`${os}-hermes`, `${mac ? "macOS" : "Windows"}: Hermes installed`, "The Hermes version line.")}${checkpoint("you see a line starting with <strong>Hermes Agent</strong> and a version number.")}${miniNote(`Got asked “How would you like to set up Hermes?” The <a href="#help">Help desk</a> explains what to do.`)}`,
+        `<p>Run:</p>${command(paste, "hermes --version")}${screenshot(`${os}-hermes`, `${mac ? "macOS" : "Windows"}: Hermes installed`, "The Hermes version line.")}${checkpoint("you see a line starting with <strong>Hermes Agent</strong> and a version number.")}${miniNote(`Got asked “How would you like to set up Hermes?” The <a href="#help">Help desk</a> explains what to do.`)}`,
       )
     );
   if (step === 3)
@@ -128,7 +131,7 @@ function stageContent(os, step) {
       instruction(
         "A",
         "Install OpenCode",
-        `<p>Paste this into ${app}:</p>${command(app, mac ? "curl -fsSL https://opencode.ai/install | bash" : "npm.cmd install -g opencode-ai")}<p>Close and reopen the window, then check it:</p>${command(app, mac ? "opencode --version" : "opencode.cmd --version")}`,
+        `<p>Paste this into ${app}:</p>${command(paste, mac ? "curl -fsSL https://opencode.ai/install | bash" : "npm.cmd install -g opencode-ai")}<p>Close and reopen the window, then check it:</p>${command(paste, mac ? "opencode --version" : "opencode.cmd --version")}`,
       ) +
       instruction(
         "B",
@@ -161,12 +164,12 @@ function stageContent(os, step) {
       instruction(
         "A",
         "Download it to your laptop",
-        `<p>Paste these three lines into ${app} and press ${enter}. They put the project in your home folder, so it's easy to find again.</p>${command(app, "cd ~\ngit clone https://github.com/amaanr/wall-g-bot.git\ncd wall-g-bot")}${repoIsPrivate ? signIn + desktopRoute : ""}`,
+        `<p>Paste these three lines into ${app} and press ${enter}. They put the project in your home folder, so it's easy to find again.</p>${command(paste, "cd ~\ngit clone https://github.com/amaanr/wall-g-bot.git\ncd wall-g-bot")}${repoIsPrivate ? signIn + desktopRoute : ""}`,
       ) +
       instruction(
         "B",
         "Install it and connect it to Hermes",
-        `<p>Still inside <strong>wall-g-bot</strong>, run these two. Do this before you start Hermes in step 5.</p>${command(app, `${npm} install\n${npm} run setup`)}<p>Setup connects the chat app to Hermes and turns on a <strong>free model</strong> that needs no account or key. It also makes a private connection password called <code>API_SERVER_KEY</code>. That isn't an OpenAI key and it costs nothing. Just keep it to yourself.</p>${screenshot("repo", "The starter, connected", "Setup finishing with “All set!”.")}${checkpoint("setup finishes with <strong>“All set!”</strong>.")}`,
+        `<p>Still inside <strong>wall-g-bot</strong>, run these two. Do this before you start Hermes in step 5.</p>${command(paste, `${npm} install\n${npm} run setup`)}<p>Setup connects the chat app to Hermes and turns on a <strong>free model</strong> that needs no account or key. It also makes a private connection password called <code>API_SERVER_KEY</code>. That isn't an OpenAI key and it costs nothing. Just keep it to yourself.</p>${screenshot("repo", "The starter, connected", "Setup finishing with “All set!”.")}${checkpoint("setup finishes with <strong>“All set!”</strong>.")}`,
       )
     );
   }
@@ -175,12 +178,12 @@ function stageContent(os, step) {
     instruction(
       "A",
       "Start Hermes in window 1",
-      `<p>In the window you've been using, run this and leave it open:</p>${command(app, "hermes gateway")}<p>Lots of text scrolls past, including warnings about optional extras you haven't set up. That's expected. If it stops with an error and gives you back the prompt, check the <a href="#help">Help desk</a>.</p>`,
+      `<p>In the window you've been using, run this and leave it open:</p>${command(paste, "hermes gateway")}<p>Lots of text scrolls past, including warnings about optional extras you haven't set up. That's expected. If it stops with an error and gives you back the prompt, check the <a href="#help">Help desk</a>.</p>`,
     ) +
     instruction(
       "B",
       "Start the chat app in window 2",
-      `<p>${mac ? "Press <strong>Command + N</strong> to open a new Terminal window." : "Open a <strong>second</strong> PowerShell window from the Start menu."} Paste these two lines:</p>${command(app, `cd ~/wall-g-bot\n${npm} run dev`)}<p>Leave it open once it says it's running at <strong>http://localhost:3000</strong>.</p>`,
+      `<p>${mac ? "Press <strong>Command + N</strong> to open a new Terminal window." : "Open a <strong>second</strong> PowerShell window from the Start menu."} Paste these two lines:</p>${command(paste, `cd ~/wall-g-bot\n${npm} run dev`)}<p>Leave it open once it says it's running at <strong>http://localhost:3000</strong>.</p>`,
     ) +
     instruction(
       "C",

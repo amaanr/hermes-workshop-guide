@@ -394,6 +394,41 @@ main {
   height: 15px;
 }
 
+/* Primary download action inside a setup step. This is the thing we want the
+   eye to land on first, so it's the filled rust CTA, sized up, with a small
+   "opens in a new tab" hint underneath so nothing feels like a trap. */
+.download {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 18px 0 6px;
+}
+.button-download {
+  min-height: 54px;
+  padding: 15px 28px;
+  font-size: 16px;
+  font-weight: 650;
+}
+.button-download .icon {
+  width: 17px;
+  height: 17px;
+  opacity: 0.85;
+}
+.download-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  padding-left: 2px;
+}
+.download-hint .icon {
+  width: 13px;
+  height: 13px;
+  opacity: 0.7;
+}
+
 /* Welcome: hero */
 .hero {
   display: grid;
@@ -1149,11 +1184,26 @@ main {
   padding-top: 24px;
 }
 
+/* A / B / C sub-steps read as a path: a filled rust badge anchors each one and
+   a soft spine connects them down the left, so the sequence is obvious and a
+   nervous reader always knows where they are. */
 .instruction {
-  margin-bottom: 32px;
+  position: relative;
+  margin-bottom: 28px;
+  padding-left: 44px;
 }
 .instruction:last-child {
   margin-bottom: 0;
+}
+/* The connecting spine, drawn from this badge to the next sub-step. */
+.instruction:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 34px;
+  bottom: -28px;
+  width: 2px;
+  background: var(--line);
 }
 .instruction h4 {
   font-family: var(--display);
@@ -1162,17 +1212,27 @@ main {
   letter-spacing: -0.01em;
   display: flex;
   gap: 11px;
-  align-items: baseline;
+  align-items: center;
   margin: 0 0 8px;
 }
 .instruction h4 .marker {
-  font-size: 12px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--rust);
+  color: var(--paper);
+  font-size: 14px;
   font-weight: 700;
-  color: var(--rust);
   font-family: var(--body);
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
   flex: none;
-  min-width: 18px;
+  box-shadow: var(--shadow-sm);
 }
 .instruction p {
   font-size: 14.5px;
@@ -1190,12 +1250,17 @@ main {
 }
 
 /* Commands: light and friendly. Copy, paste, press Enter. */
+/* Terminal blocks are supporting detail, not the main event. They stay calm
+   and friendly: a soft brand-tinted header that names the gentle action
+   ("Paste into Terminal"), a clearly tappable Copy chip, and a warm code area
+   with a left accent so it reads as "a line we give you", not scary code. */
 .command {
   border-radius: 12px;
   overflow: hidden;
   margin: 14px 0;
   background: var(--card);
   border: 1px solid var(--line);
+  border-left: 3px solid var(--rust-tint);
   box-shadow: var(--shadow-sm);
 }
 .command-top {
@@ -1203,53 +1268,64 @@ main {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  min-height: 42px;
-  padding: 5px 7px 5px 14px;
-  background: var(--paper-2);
+  min-height: 44px;
+  padding: 6px 8px 6px 14px;
+  background: color-mix(in srgb, var(--rust-tint) 45%, var(--card));
   border-bottom: 1px solid var(--line-soft);
 }
-.command-top span {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+.command-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--rust-deep);
   font-weight: 600;
+}
+.command-label .icon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.75;
 }
 .copy-button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 32px;
-  padding: 5px 12px;
+  min-height: 34px;
+  padding: 6px 15px;
   border-radius: 8px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  color: var(--rust-deep);
-  font-size: 12px;
+  background: var(--rust);
+  border: 1px solid transparent;
+  color: var(--paper);
+  font-size: 13px;
   font-weight: 600;
+  cursor: pointer;
   transition:
-    border-color 0.15s,
-    color 0.15s;
+    background 0.15s,
+    transform 0.12s;
 }
 .copy-button .icon {
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
 }
 .copy-button:hover {
-  border-color: var(--rust);
+  background: var(--rust-deep);
+  transform: translateY(-1px);
 }
 .copy-button.copied {
-  color: var(--teal);
-  border-color: color-mix(in srgb, var(--teal) 45%, transparent);
+  background: var(--teal);
+  color: var(--paper);
 }
 .command pre {
   margin: 0;
-  padding: 14px 16px;
+  padding: 15px 16px 15px 18px;
   overflow-x: auto;
   line-height: 1.75;
+  background: color-mix(in srgb, var(--paper) 55%, var(--card));
 }
 .command code {
-  font-size: 13px;
+  font-size: 13.5px;
   background: none;
   color: var(--ink);
   padding: 0;
