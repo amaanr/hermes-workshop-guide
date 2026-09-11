@@ -7,17 +7,17 @@ Static HTML, CSS, and JavaScript. No build step or backend. Vercel deploys `main
 ## Content
 
 - `index.html`: the welcome page (what we're building, ideas, the hour, what you need, the crew), the setup shell, the locked "What we'll build" vault, and the help desk.
-- `app.js`: five Mac/Windows setup steps as an accordion (only the first incomplete step opens by default), the "starting it up again" card, help answers, navigation, local completion checkmarks, the hero ASCII pyramid renderer, and the vault (countdown, access code, in-browser decryption).
+- `app.js`: five Mac/Windows setup steps as an accordion (only the first incomplete step opens by default), the "starting it up again" card, help answers, navigation, local completion checkmarks, the hero ASCII pyramid and vault ASCII torus renderers, and the vault (countdown, access code, in-browser decryption).
 - `styles.css`: responsive layout in a warm editorial palette (cream paper, terracotta, deep teal) with Fraunces + Inter, modeled on the Module 1 deck. The vault switches to a dark retro style.
 - `assets/brief.sealed.json`: the in-room build plan, encrypted with AES-256-GCM using a key derived from the access code (PBKDF2-SHA256). The plaintext is not in this repo.
 - The home hero shows a spinning ASCII tetrahedron rendered in JavaScript, ported from montekkundan's MIT-licensed `ascii-pyramid` (21st.dev). It pauses when scrolled off-screen and holds still under reduced motion.
-- `assets/kaaba.mp4`, `kaaba.webm`, `kaaba-poster.webp`: the vault's looping ASCII art in a CRT frame, from the MIT-licensed 21st.dev `kaaba` component by chillacollab.
+- The vault shows a spinning ASCII torus (the classic "donut") rendered live in JavaScript inside the CRT frame — no video files. It animates only while the vault is open and holds a single still frame under reduced motion.
 - `assets/amaan.webp` and `assets/nadim.webp`: user-provided headshots, cropped face-centered so the avatar stack aligns. Amaan is in the grey sweater; Nadim is in the black T-shirt.
 - `assets/summit-logo-ink.png` / `-rust.png` / `-white.png`: the official summit maple-leaf wordmark, recolored from the original white knockout (`summit-logo.png`) via its alpha mask for use on light and dark backgrounds. Reused with the organizer's permission for this request.
 
 ## The locked build plan
 
-"What we'll build" shows a single-screen vault (Kaaba CRT on the left, code entry and a live countdown on the right) until someone enters the access code. Instructors read the code out in the room at 3 PM on Saturday; anyone who sets up at home can also try to guess it early. Decryption happens in the browser, and nothing is sent anywhere. Once unlocked, the plan stays open on that device until someone clicks "Lock this page again".
+"What we'll build" shows a single-screen vault (an ASCII torus on a CRT on the left, code entry and a live countdown on the right) until someone enters the access code. Instructors read the code out in the room at 3 PM on Saturday; anyone who sets up at home can also try to guess it early. Decryption happens in the browser, and nothing is sent anywhere. Once unlocked, the plan stays open on that device until someone clicks "Lock this page again".
 
 The code is deliberately guessable, so never put a real API key in the brief (the seal script refuses anything that looks like one).
 

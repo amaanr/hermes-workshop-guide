@@ -1607,13 +1607,24 @@ main {
   transition: box-shadow 0.4s ease;
 }
 .gate-art {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: auto;
   aspect-ratio: 3 / 2;
-  object-fit: cover;
+  margin: 0;
+  overflow: hidden;
   border-radius: 11px;
   background: #0e0c0a;
+  font-family: var(--mono);
+  font-size: clamp(6px, 1.1vw, 11px);
+  line-height: 1.02;
+  white-space: pre;
+  color: #a8f0c6;
+  text-shadow: 0 0 12px rgba(168, 240, 198, 0.4);
+  -webkit-user-select: none;
+  user-select: none;
 }
 .gate-glass {
   position: absolute;
