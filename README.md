@@ -40,9 +40,9 @@ Slots render nothing until an image is set, so the steps stay uncluttered. Slots
 
 ## Workshop checks
 
-- The starter at https://github.com/amaanr/hermes-bot is private. Arrange attendee access or explicitly approve a visibility change before the workshop. This site does not grant access. Once the repo is public, set `repoIsPrivate` to `false` in `app.js`: the invitation, sign-in, and GitHub Desktop notes then disappear.
+- The starter at https://github.com/amaanr/wall-g-bot is public, so attendees can clone it with no invitation. `repoIsPrivate` is `false` in `app.js`, which hides the invitation, sign-in, and GitHub Desktop notes. Flip it back to `true` only if the repo ever returns to private.
 - The Hermes install commands pass `--skip-setup` (Mac) / `-SkipSetup` (Windows). Without it, the installer opens Hermes's own setup wizard, whose default option is a Nous Portal sign-in. The help desk covers recovery for anyone who already went through it.
-- Every step uses one project location, `~/hermes-bot`, including the GitHub Desktop route, so restart instructions are the same for everyone.
+- Every step uses one project location, `~/wall-g-bot`, including the GitHub Desktop route, so restart instructions are the same for everyone.
 - The bot is a web chat UI in front of a **local Hermes agent** (Hermes runs on the attendee's laptop; the app talks to it via Hermes's api_server). At home it uses a free, no-sign-up model (`opencode-free`); `npm run setup` wires this up automatically.
 - Share the OpenAI key privately at the workshop. Never put it into this website, the sealed brief, or the repository. Use limited workshop credentials and revoke them after the event. Switching to it is `hermes model`. No code change needed.
 - The starter is a chat bot. Opportunity briefings are the live build goal; live search and scheduling are stretch features Hermes can grow into, not existing starter features.

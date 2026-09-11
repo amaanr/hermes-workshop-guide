@@ -10,10 +10,10 @@ const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const prefersReduced = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// The starter repo is private for now. Flip this to false once
-// github.com/amaanr/hermes-bot is public: the invitation, GitHub sign-in and
-// GitHub Desktop notes then disappear from the guide.
-const repoIsPrivate = true;
+// The starter repo is public at github.com/amaanr/wall-g-bot, so the
+// invitation, GitHub sign-in and GitHub Desktop notes are hidden. Flip this
+// back to true only if the repo ever returns to private.
+const repoIsPrivate = false;
 
 const command = (label, text) =>
   `<div class="command"><div class="command-top"><span>${escapeHTML(label)}</span><button class="copy-button" type="button" aria-label="Copy: ${escapeHTML(label)} command">${icon("copy")} Copy</button></div><pre><code>${escapeHTML(text)}</code></pre></div>`;
@@ -141,7 +141,7 @@ function stageContent(os, step) {
       )
     );
   if (step === 4) {
-    const desktopRoute = `<details class="inline-help"><summary>Use GitHub Desktop instead</summary><div><ol><li>Install <a href="https://desktop.github.com/download/" target="_blank" rel="noopener">GitHub Desktop</a> and sign in.</li><li><strong>File → Clone repository → URL</strong>, and paste <code>https://github.com/amaanr/hermes-bot</code>.</li><li>Next to <strong>Local path</strong>, click <strong>Choose…</strong> and pick your home folder (the one named after you), so the path ends in <strong>hermes-bot</strong>. Then click <strong>Clone</strong>.</li><li>In ${app}, run <code>cd ~/hermes-bot</code> and carry on with <strong>B</strong> below. Don't clone twice.</li></ol></div></details>`;
+    const desktopRoute = `<details class="inline-help"><summary>Use GitHub Desktop instead</summary><div><ol><li>Install <a href="https://desktop.github.com/download/" target="_blank" rel="noopener">GitHub Desktop</a> and sign in.</li><li><strong>File → Clone repository → URL</strong>, and paste <code>https://github.com/amaanr/wall-g-bot</code>.</li><li>Next to <strong>Local path</strong>, click <strong>Choose…</strong> and pick your home folder (the one named after you), so the path ends in <strong>wall-g-bot</strong>. Then click <strong>Clone</strong>.</li><li>In ${app}, run <code>cd ~/wall-g-bot</code> and carry on with <strong>B</strong> below. Don't clone twice.</li></ol></div></details>`;
     const signIn = mac
       ? miniNote(
           "If Terminal asks for a <strong>Username</strong> or <strong>Password</strong>, press <strong>Control + C</strong> and use GitHub Desktop instead. GitHub won't accept your normal password here.",
@@ -161,12 +161,12 @@ function stageContent(os, step) {
       instruction(
         "A",
         "Download it to your laptop",
-        `<p>Paste these three lines into ${app} and press ${enter}. They put the project in your home folder, so it's easy to find again.</p>${command(app, "cd ~\ngit clone https://github.com/amaanr/hermes-bot.git\ncd hermes-bot")}${repoIsPrivate ? signIn + desktopRoute : ""}`,
+        `<p>Paste these three lines into ${app} and press ${enter}. They put the project in your home folder, so it's easy to find again.</p>${command(app, "cd ~\ngit clone https://github.com/amaanr/wall-g-bot.git\ncd wall-g-bot")}${repoIsPrivate ? signIn + desktopRoute : ""}`,
       ) +
       instruction(
         "B",
         "Install it and connect it to Hermes",
-        `<p>Still inside <strong>hermes-bot</strong>, run these two. Do this before you start Hermes in step 5.</p>${command(app, `${npm} install\n${npm} run setup`)}<p>Setup connects the chat app to Hermes and turns on a <strong>free model</strong> that needs no account or key. It also makes a private connection password called <code>API_SERVER_KEY</code>. That isn't an OpenAI key and it costs nothing. Just keep it to yourself.</p>${screenshot("repo", "The starter, connected", "Setup finishing with “All set!”.")}${checkpoint("setup finishes with <strong>“All set!”</strong>.")}`,
+        `<p>Still inside <strong>wall-g-bot</strong>, run these two. Do this before you start Hermes in step 5.</p>${command(app, `${npm} install\n${npm} run setup`)}<p>Setup connects the chat app to Hermes and turns on a <strong>free model</strong> that needs no account or key. It also makes a private connection password called <code>API_SERVER_KEY</code>. That isn't an OpenAI key and it costs nothing. Just keep it to yourself.</p>${screenshot("repo", "The starter, connected", "Setup finishing with “All set!”.")}${checkpoint("setup finishes with <strong>“All set!”</strong>.")}`,
       )
     );
   }
@@ -180,7 +180,7 @@ function stageContent(os, step) {
     instruction(
       "B",
       "Start the chat app in window 2",
-      `<p>${mac ? "Press <strong>Command + N</strong> to open a new Terminal window." : "Open a <strong>second</strong> PowerShell window from the Start menu."} Paste these two lines:</p>${command(app, `cd ~/hermes-bot\n${npm} run dev`)}<p>Leave it open once it says it's running at <strong>http://localhost:3000</strong>.</p>`,
+      `<p>${mac ? "Press <strong>Command + N</strong> to open a new Terminal window." : "Open a <strong>second</strong> PowerShell window from the Start menu."} Paste these two lines:</p>${command(app, `cd ~/wall-g-bot\n${npm} run dev`)}<p>Leave it open once it says it's running at <strong>http://localhost:3000</strong>.</p>`,
     ) +
     instruction(
       "C",
@@ -198,7 +198,7 @@ function restartHTML() {
     <span class="eyebrow">On Saturday, or any time</span>
     <h2 id="restart-title">Starting it up again</h2>
     <p>Closed everything after setup? That's fine. Nothing is lost. Open two ${app} windows:</p>
-    <div class="restart-grid">${command(`Window 1 · ${app}`, "hermes gateway")}${command(`Window 2 · ${app}`, `cd ~/hermes-bot\n${npm} run dev`)}</div>
+    <div class="restart-grid">${command(`Window 1 · ${app}`, "hermes gateway")}${command(`Window 2 · ${app}`, `cd ~/wall-g-bot\n${npm} run dev`)}</div>
     <p>Then open <a href="http://localhost:3000" target="_blank" rel="noopener">localhost:3000</a>. On Saturday, bring your laptop <strong>and its charger</strong>.</p>
   </section>`;
 }
@@ -222,7 +222,7 @@ const helpItems = [
   [
     "Install",
     "The Hermes installer started asking setup questions",
-    `<p>That's Hermes's own setup wizard (“How would you like to set up Hermes?”). It appears if the install command ran without its skip-setup part. You don't need it: press <strong>Control + C</strong> to leave. Hermes is already installed by then. Close and reopen your window, then carry on with <code>hermes --version</code>.</p><p>Already picked an option or signed in to something? Run <code>hermes config set model.provider auto</code>, then run the setup command from <a href="#setup/mac/4" data-setup-step="4">step 4</a> again inside <strong>hermes-bot</strong>. That puts you back on the free model.</p>`,
+    `<p>That's Hermes's own setup wizard (“How would you like to set up Hermes?”). It appears if the install command ran without its skip-setup part. You don't need it: press <strong>Control + C</strong> to leave. Hermes is already installed by then. Close and reopen your window, then carry on with <code>hermes --version</code>.</p><p>Already picked an option or signed in to something? Run <code>hermes config set model.provider auto</code>, then run the setup command from <a href="#setup/mac/4" data-setup-step="4">step 4</a> again inside <strong>wall-g-bot</strong>. That puts you back on the free model.</p>`,
   ],
   [
     "Windows",
@@ -242,7 +242,7 @@ const helpItems = [
   [
     "Folder",
     "“Could not read package.json”",
-    `<p>You're in the wrong folder. Run <code>cd ~/hermes-bot</code> first (or type <code>cd </code> and drag the folder in), then try again. If you already downloaded the project once, use that copy rather than downloading it again.</p>`,
+    `<p>You're in the wrong folder. Run <code>cd ~/wall-g-bot</code> first (or type <code>cd </code> and drag the folder in), then try again. If you already downloaded the project once, use that copy rather than downloading it again.</p>`,
   ],
   [
     "Hermes",
@@ -257,17 +257,17 @@ const helpItems = [
   [
     "Port",
     "“Port 3000 is in use” / EADDRINUSE",
-    `<p>An earlier copy is probably still running. Stop it with <strong>Control + C</strong>. Or add <code>PORT=3001</code> on a new line in the <code>.env</code> file inside hermes-bot, save, restart, and open <a href="http://localhost:3001" target="_blank" rel="noopener">localhost:3001</a>.</p>`,
+    `<p>An earlier copy is probably still running. Stop it with <strong>Control + C</strong>. Or add <code>PORT=3001</code> on a new line in the <code>.env</code> file inside wall-g-bot, save, restart, and open <a href="http://localhost:3001" target="_blank" rel="noopener">localhost:3001</a>.</p>`,
   ],
   [
     "Restart",
     "I closed everything. How do I start it again?",
-    `<p>Nothing is lost. Open two windows. In the first, run <code>hermes gateway</code>. In the second, run <code>cd ~/hermes-bot</code>, then <code>npm run dev</code> (<code>npm.cmd run dev</code> on Windows). Then open <a href="http://localhost:3000" target="_blank" rel="noopener">localhost:3000</a>.</p>`,
+    `<p>Nothing is lost. Open two windows. In the first, run <code>hermes gateway</code>. In the second, run <code>cd ~/wall-g-bot</code>, then <code>npm run dev</code> (<code>npm.cmd run dev</code> on Windows). Then open <a href="http://localhost:3000" target="_blank" rel="noopener">localhost:3000</a>.</p>`,
   ],
   [
     "Safety",
     "Is this safe? How do I remove it later?",
-    `<p>Yes. These are standard tools developers use every day, and nothing here changes your security settings. The free model is a shared online service, so don't send it anything personal.</p><p>To remove everything later, run <code>hermes uninstall --full</code>, delete the <strong>hermes-bot</strong> folder, and uninstall Node.js, Git, and OpenChamber like any other app.</p>`,
+    `<p>Yes. These are standard tools developers use every day, and nothing here changes your security settings. The free model is a shared online service, so don't send it anything personal.</p><p>To remove everything later, run <code>hermes uninstall --full</code>, delete the <strong>wall-g-bot</strong> folder, and uninstall Node.js, Git, and OpenChamber like any other app.</p>`,
   ],
 ].filter(Boolean);
 document.getElementById("faq-list").innerHTML = helpItems
