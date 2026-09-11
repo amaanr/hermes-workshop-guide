@@ -484,8 +484,6 @@ const gateSubmit = gateForm.querySelector(".gate-submit");
 const gateStatus = document.getElementById("gate-status");
 const gateState = document.getElementById("gate-state");
 const gateClock = gate.querySelector("[data-cd-clock]");
-const gateArt = document.getElementById("gate-art");
-let gateArtControl = null;
 let sealedBrief = null;
 let attempts = 0;
 let unlocking = false;
@@ -571,12 +569,10 @@ function startGateEffects() {
   renderCountdown();
   clearInterval(countdownTimer);
   countdownTimer = setInterval(renderCountdown, 1000);
-  gateArtControl?.start();
 }
 function stopGateEffects() {
   clearInterval(countdownTimer);
   countdownTimer = 0;
-  gateArtControl?.stop();
 }
 
 function showBrief(html, { focus = true } = {}) {
@@ -918,89 +914,6 @@ document.addEventListener("click", async (event) => {
     }
   });
   io.observe(el);
-})();
-
-// Vault ASCII torus — the classic spinning "donut", rendered to text with
-// per-point lambert shading. Vanilla, no deps; a clean, generic companion to the
-// hero pyramid. Exposes start/stop so the vault view can pause it off-screen and
-// hold a single still frame under reduced motion.
-(() => {
-  const el = gateArt;
-  if (!el) return;
-  const W = 60,
-    H = 40;
-  const R1 = 1,
-    R2 = 2,
-    K2 = 5;
-  const K1 = (W * K2 * 3) / (8 * (R1 + R2));
-  const ramp = ".,-~:;=!*#$@";
-  const zbuf = new Float32Array(W * H);
-  const out = new Array(W * H);
-
-  function frame(A, B) {
-    zbuf.fill(0);
-    out.fill(" ");
-    const cA = Math.cos(A),
-      sA = Math.sin(A),
-      cB = Math.cos(B),
-      sB = Math.sin(B);
-    for (let theta = 0; theta < 6.28; theta += 0.07) {
-      const ct = Math.cos(theta),
-        st = Math.sin(theta);
-      for (let phi = 0; phi < 6.28; phi += 0.02) {
-        const cp = Math.cos(phi),
-          sp = Math.sin(phi);
-        const cx = R2 + R1 * ct,
-          cy = R1 * st;
-        const x = cx * (cB * cp + sA * sB * sp) - cy * cA * sB;
-        const y = cx * (sB * cp - sA * cB * sp) + cy * cA * cB;
-        const z = K2 + cA * cx * sp + cy * sA;
-        const iz = 1 / z;
-        const xp = Math.round(W / 2 + K1 * iz * x);
-        const yp = Math.round(H / 2 - (K1 / 2) * iz * y);
-        if (xp < 0 || xp >= W || yp < 0 || yp >= H) continue;
-        const L =
-          cp * ct * sB -
-          cA * ct * sp -
-          sA * st +
-          cB * (cA * st - ct * sA * sp);
-        const idx = xp + yp * W;
-        if (iz > zbuf[idx]) {
-          zbuf[idx] = iz;
-          out[idx] = ramp[Math.max(0, Math.floor(L * 8))] || ".";
-        }
-      }
-    }
-    let s = "";
-    for (let y = 0; y < H; y++) s += out.slice(y * W, y * W + W).join("") + "\n";
-    el.textContent = s;
-  }
-
-  let a = 0,
-    b = 0,
-    raf = 0,
-    last = 0;
-  frame(a, b); // a still frame is always visible
-  const loop = (t) => {
-    if (t - last > 45) {
-      a += 0.07;
-      b += 0.03;
-      frame(a, b);
-      last = t;
-    }
-    raf = requestAnimationFrame(loop);
-  };
-  gateArtControl = {
-    start() {
-      if (raf || prefersReduced()) return;
-      raf = requestAnimationFrame(loop);
-    },
-    stop() {
-      if (!raf) return;
-      cancelAnimationFrame(raf);
-      raf = 0;
-    },
-  };
 })();
 
 route(true);

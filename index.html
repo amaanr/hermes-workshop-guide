@@ -560,57 +560,46 @@
           hidden
         >
           <div class="gate" id="gate">
-            <div class="gate-monitor" aria-hidden="true">
-              <pre class="gate-art" id="gate-art"></pre>
-              <span class="gate-glass"></span>
-              <span class="gate-scan"></span>
-            </div>
-            <div class="gate-console">
-              <div class="gate-bar" aria-hidden="true">
-                <span class="gate-path">vault // what-we-build</span>
-                <span class="gate-state" id="gate-state">Sealed</span>
+            <span class="gate-badge" aria-hidden="true">
+              <svg class="icon"><use href="#i-lock" data-lock-icon /></svg>
+            </span>
+            <span class="gate-eyebrow">What we'll build</span>
+            <h1 class="gate-title" id="workshop-title">
+              Locked until <span>showtime.</span>
+            </h1>
+            <p class="gate-copy">Revealed live at 3&nbsp;PM. Got the code? Open it now.</p>
+            <form class="gate-form" id="gate-form" novalidate>
+              <label class="sr-only" for="gate-code">Access code</label>
+              <div class="gate-field">
+                <input
+                  id="gate-code"
+                  name="code"
+                  type="password"
+                  placeholder="Access code"
+                  autocomplete="one-time-code"
+                  autocapitalize="none"
+                  spellcheck="false"
+                  enterkeyhint="go"
+                  maxlength="40"
+                  aria-describedby="gate-status"
+                />
+                <button class="gate-submit" type="submit">Unlock</button>
               </div>
-              <h1 class="gate-title" id="workshop-title">
-                What we'll build is <span>under lock.</span>
-              </h1>
-              <p class="gate-copy">
-                We reveal the code in the room at 3:00 PM Saturday. Set up at
-                home and you can crack it early.
-              </p>
-              <form class="gate-form" id="gate-form" novalidate>
-                <label class="gate-label" for="gate-code"
-                  >Access code</label
-                >
-                <div class="gate-field">
-                  <span class="gate-caret" aria-hidden="true">&gt;</span>
-                  <input
-                    id="gate-code"
-                    name="code"
-                    type="password"
-                    autocomplete="one-time-code"
-                    autocapitalize="none"
-                    spellcheck="false"
-                    enterkeyhint="go"
-                    maxlength="40"
-                    aria-describedby="gate-status"
-                  />
-                  <button class="gate-submit" type="submit">Unlock</button>
-                </div>
-                <p
-                  class="gate-status"
-                  id="gate-status"
-                  role="status"
-                  aria-live="polite"
-                ></p>
-              </form>
-              <p class="gate-countdown" aria-hidden="true">
-                <span class="countdown-label">Revealed in</span>
-                <span class="countdown-clock" data-cd-clock>00:00:00:00</span>
-              </p>
-              <p class="sr-only">
-                The code is revealed Saturday, September 12 at 3:00 PM Eastern.
-              </p>
-            </div>
+              <p
+                class="gate-status"
+                id="gate-status"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </form>
+            <p class="gate-countdown">
+              <span class="countdown-label">Opens in</span>
+              <span class="countdown-clock" data-cd-clock>00:00:00:00</span>
+            </p>
+            <span class="gate-state sr-only" id="gate-state">Locked</span>
+            <p class="sr-only">
+              The code is revealed Saturday, September 12 at 3:00 PM Eastern.
+            </p>
           </div>
           <div class="brief" id="brief" hidden></div>
         </section>
