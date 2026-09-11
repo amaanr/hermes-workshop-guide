@@ -438,14 +438,21 @@ function markDone(n) {
   }
   refreshProgressUI();
   if (!wasDone) {
-    // Gentle forward momentum: open the next thing that still needs doing.
-    const next = firstIncomplete();
-    if (next !== n) {
-      openStep(next);
-      scrollStepToTop(next);
+    const everythingDone = doneCount() === 5;
+    if (everythingDone) {
+      // Last step complete: collapse it and rest on the "you're ready" banner.
+      // Don't reopen anything — there's nothing left to advance to.
+      if (openStepNum === n) openStep(n, { toggle: true });
+    } else {
+      // Gentle forward momentum: open the next step that still needs doing.
+      const next = firstIncomplete();
+      if (next !== n) {
+        openStep(next);
+        scrollStepToTop(next);
+      }
     }
     notify(
-      doneCount() === 5
+      everythingDone
         ? "That's everything. You're ready! 🎉"
         : `Nice. ${doneCount()} of 5 done.`,
     );
