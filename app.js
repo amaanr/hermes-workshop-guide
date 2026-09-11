@@ -405,6 +405,22 @@ function openStep(n, { toggle = false } = {}) {
   hashReplace();
 }
 
+// Bring a step's header to the top of the view. We wait ~1 transition (the
+// step-panel open/close is 0.28s) so the collapsing step above has finished
+// shrinking first — otherwise the reflow shifts our target mid-scroll and we
+// land at the bottom of the step instead of the top.
+function scrollStepToTop(n) {
+  const el = root.querySelector(`.step-item[data-step="${n}"]`);
+  if (!el) return;
+  const go = () =>
+    el.scrollIntoView({
+      block: "start",
+      behavior: prefersReduced() ? "auto" : "smooth",
+    });
+  if (prefersReduced()) go();
+  else setTimeout(go, 300);
+}
+
 function markDone(n) {
   const list = state.done[state.os];
   const wasDone = list.includes(n);
@@ -426,12 +442,7 @@ function markDone(n) {
     const next = firstIncomplete();
     if (next !== n) {
       openStep(next);
-      const el = root.querySelector(`.step-item[data-step="${next}"]`);
-      if (el)
-        el.scrollIntoView({
-          block: "nearest",
-          behavior: prefersReduced() ? "auto" : "smooth",
-        });
+      scrollStepToTop(next);
     }
     notify(
       doneCount() === 5
@@ -750,10 +761,7 @@ document.addEventListener("click", async (event) => {
   if (next) {
     const n = Number(next.dataset.next);
     openStep(n);
-    root.querySelector(`.step-item[data-step="${n}"]`).scrollIntoView({
-      block: "nearest",
-      behavior: prefersReduced() ? "auto" : "smooth",
-    });
+    scrollStepToTop(n);
     return;
   }
   const osBtn = target.closest("[data-os]");
