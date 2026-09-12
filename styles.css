@@ -1554,6 +1554,13 @@ main {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0 16px;
   margin: 6px 0;
+  align-items: start;
+}
+/* Window 2 of the restart card holds two commands (cd, then run dev). Stack
+   them in one column so they read as a single window's sequence. */
+.restart-window {
+  display: grid;
+  gap: 0;
 }
 
 /* The vault: the locked "What we'll build" page — one calm, centered card */

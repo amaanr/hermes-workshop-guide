@@ -17,6 +17,10 @@ const repoIsPrivate = false;
 
 const command = (label, text) =>
   `<div class="command"><div class="command-top"><span class="command-label">${icon("code")}${escapeHTML(label)}</span><button class="copy-button" type="button" aria-label="Copy the ${escapeHTML(label)} command">${icon("copy")}<span>Copy</span></button></div><pre><code>${escapeHTML(text)}</code></pre></div>`;
+// One box per command. Pasting several lines at once trips up beginners (zsh's
+// bracketed paste stacks them on one line, or a slow line swallows the next), so
+// every command gets its own copy button and its own Return.
+const commandSeq = (label, lines) => lines.map((line) => command(label, line)).join("");
 const miniNote = (text, variant = "") =>
   `<div class="mini-note${variant ? " " + variant : ""}">${icon(variant === "guard" ? "lock" : "compass")}<div>${text}</div></div>`;
 const checkpoint = (text) =>
@@ -103,7 +107,7 @@ function stageContent(os, step) {
       instruction(
         "C",
         "Check they're installed",
-        `<p>Close ${app} and open it again so it sees the new tools. Paste all three lines and press ${enter}:</p>${command(paste, `node --version\n${npm} --version\ngit --version`)}${mac ? "" : miniNote("We write <code>npm.cmd</code> on Windows so you never have to change PowerShell's script settings. It's the same npm.")}${screenshot(`${os}-tools`, `${mac ? "macOS" : "Windows"}: version check`, "Your three version numbers.")}${checkpoint("you see three version numbers and no “not found”. Node's should be v22.13 or higher.")}`,
+        `<p>Close ${app} and open it again so it sees the new tools. Paste these <strong>one at a time</strong>, pressing ${enter} after each:</p>${commandSeq(paste, [`node --version`, `${npm} --version`, `git --version`])}${mac ? "" : miniNote("We write <code>npm.cmd</code> on Windows so you never have to change PowerShell's script settings. It's the same npm.")}${screenshot(`${os}-tools`, `${mac ? "macOS" : "Windows"}: version check`, "Your three version numbers.")}${checkpoint("you see three version numbers and no “not found”. Node's should be v22.13 or higher.")}`,
       )
     );
   if (step === 2)
@@ -131,7 +135,7 @@ function stageContent(os, step) {
       instruction(
         "A",
         "Install OpenCode",
-        `<p>Paste this into ${app}:</p>${command(paste, mac ? "curl -fsSL https://opencode.ai/install | bash" : "npm.cmd install -g opencode-ai")}<p>Close and reopen the window, then check it:</p>${command(paste, mac ? "opencode --version" : "opencode.cmd --version")}`,
+        `<p>Paste this into ${app} and press ${enter}:</p>${command(paste, mac ? "touch ~/.zshrc && curl -fsSL https://opencode.ai/install | bash" : "npm.cmd install -g opencode-ai")}${mac ? miniNote("The <code>touch ~/.zshrc</code> at the start just makes sure your Mac has a place to remember where OpenCode lives, so it's found automatically. Without it you'd have to copy a stray <code>export PATH…</code> line yourself.") : ""}<p><strong>${mac ? "Quit Terminal (Command + Q) and open it again" : "Close PowerShell and open it again"}</strong>, then check it worked:</p>${command(paste, mac ? "opencode --version" : "opencode.cmd --version")}${checkpoint("you see a version number, not “command not found”.")}`,
       ) +
       instruction(
         "B",
@@ -164,12 +168,12 @@ function stageContent(os, step) {
       instruction(
         "A",
         "Download it to your laptop",
-        `<p>Paste these three lines into ${app} and press ${enter}. They put the project in your home folder, so it's easy to find again.</p>${command(paste, "cd ~\ngit clone https://github.com/amaanr/wall-g-bot.git\ncd wall-g-bot")}${repoIsPrivate ? signIn + desktopRoute : ""}`,
+        `<p>Paste these <strong>one at a time</strong>, pressing ${enter} after each. They put the project in your home folder, so it's easy to find again. The middle one downloads the code, so give it a few seconds before the next.</p>${commandSeq(paste, ["cd ~", "git clone https://github.com/amaanr/wall-g-bot.git", "cd wall-g-bot"])}${repoIsPrivate ? signIn + desktopRoute : ""}`,
       ) +
       instruction(
         "B",
         "Install it and connect it to Hermes",
-        `<p>Still inside <strong>wall-g-bot</strong>, run these two. Do this before you start Hermes in step 5.</p>${command(paste, `${npm} install\n${npm} run setup`)}<p>Setup connects the chat app to Hermes and turns on a <strong>free model</strong> that needs no account or key. It also makes a private connection password called <code>API_SERVER_KEY</code>. That isn't an OpenAI key and it costs nothing. Just keep it to yourself.</p>${screenshot("repo", "The starter, connected", "Setup finishing with “All set!”.")}${checkpoint("setup finishes with <strong>“All set!”</strong>.")}`,
+        `<p>Still inside <strong>wall-g-bot</strong>, run these <strong>one at a time</strong>. Do this before you start Hermes in step 5. The first one takes a minute, so let it finish before the next.</p>${commandSeq(paste, [`${npm} install`, `${npm} run setup`])}<p>Setup connects the chat app to Hermes and turns on a <strong>free model</strong> that needs no account or key. It also makes a private connection password called <code>API_SERVER_KEY</code>. That isn't an OpenAI key and it costs nothing. Just keep it to yourself.</p>${screenshot("repo", "The starter, connected", "Setup finishing with “All set!”.")}${checkpoint("setup finishes with <strong>“All set!”</strong>.")}`,
       )
     );
   }
@@ -183,12 +187,12 @@ function stageContent(os, step) {
     instruction(
       "B",
       "Start the chat app in window 2",
-      `<p>${mac ? "Press <strong>Command + N</strong> to open a new Terminal window." : "Open a <strong>second</strong> PowerShell window from the Start menu."} Paste these two lines:</p>${command(paste, `cd ~/wall-g-bot\n${npm} run dev`)}<p>Leave it open once it says it's running at <strong>http://localhost:3000</strong>.</p>`,
+      `<p>${mac ? "Press <strong>Command + N</strong> to open a new Terminal window." : "Open a <strong>second</strong> PowerShell window from the Start menu."} Paste these <strong>one at a time</strong>, pressing ${enter} after each:</p>${commandSeq(paste, [`cd ~/wall-g-bot`, `${npm} run dev`])}<p>Leave it open once it says <strong>“WALL-G is running at…”</strong>. It's usually <strong>http://localhost:3000</strong>, but if that address was busy it picks the next one (like <strong>3001</strong>) and prints the exact one to open.</p>`,
     ) +
     instruction(
       "C",
       "Say hello",
-      `${linkButton("http://localhost:3000", "Open localhost:3000")}<p>If a bar asks you to start <code>hermes gateway</code>, give it a few seconds. It disappears by itself once the chat app finds Hermes. Then send <strong>“Reply only with: Hermes is ready.”</strong> The welcome screen doesn't count. You need a reply.</p>${miniNote(`The free model is shared by lots of people, so the first reply can take a couple of minutes. Please don't send it anything personal. Nothing after three minutes? Keep both windows open and check the <a href="#help">Help desk</a>.`)}${screenshot("running", "A real reply in your browser", "Your test conversation.")}${checkpoint("a real reply appears in your browser. You're ready for Saturday! 🎉")}`,
+      `<p>Open the <strong>http://localhost:…</strong> address from the line WALL-G just printed (usually <a href="http://localhost:3000" target="_blank" rel="noopener">localhost:3000</a>).</p>${linkButton("http://localhost:3000", "Open localhost:3000")}<p>If a bar asks you to start <code>hermes gateway</code>, give it a few seconds. It disappears by itself once the chat app finds Hermes. Then send <strong>“Reply only with: Hermes is ready.”</strong> The welcome screen doesn't count. You need a reply.</p>${miniNote(`The free model is shared by lots of people, so the first reply can take a couple of minutes. Please don't send it anything personal. Nothing after three minutes? Keep both windows open and check the <a href="#help">Help desk</a>.`)}${screenshot("running", "A real reply in your browser", "Your test conversation.")}${checkpoint("a real reply appears in your browser. You're ready for Saturday! 🎉")}`,
     )
   );
 }
@@ -200,9 +204,9 @@ function restartHTML() {
   return `<section class="restart" aria-labelledby="restart-title">
     <span class="eyebrow">On Saturday, or any time</span>
     <h2 id="restart-title">Starting it up again</h2>
-    <p>Closed everything after setup? That's fine. Nothing is lost. Open two ${app} windows:</p>
-    <div class="restart-grid">${command(`Window 1 · ${app}`, "hermes gateway")}${command(`Window 2 · ${app}`, `cd ~/wall-g-bot\n${npm} run dev`)}</div>
-    <p>Then open <a href="http://localhost:3000" target="_blank" rel="noopener">localhost:3000</a>. On Saturday, bring your laptop <strong>and its charger</strong>.</p>
+    <p>Closed everything after setup? That's fine. Nothing is lost. Open two ${app} windows and run these <strong>one at a time</strong>:</p>
+    <div class="restart-grid">${command(`Window 1 · ${app}`, "hermes gateway")}<div class="restart-window">${command(`Window 2 · ${app}`, "cd ~/wall-g-bot")}${command("Then, same window", `${npm} run dev`)}</div></div>
+    <p>Then open the <strong>http://localhost:…</strong> address it prints (usually <a href="http://localhost:3000" target="_blank" rel="noopener">localhost:3000</a>; if that port's busy it uses the next one). On Saturday, bring your laptop <strong>and its charger</strong>.</p>
   </section>`;
 }
 
@@ -259,8 +263,8 @@ const helpItems = [
   ],
   [
     "Port",
-    "“Port 3000 is in use” / EADDRINUSE",
-    `<p>An earlier copy is probably still running. Stop it with <strong>Control + C</strong>. Or add <code>PORT=3001</code> on a new line in the <code>.env</code> file inside wall-g-bot, save, restart, and open <a href="http://localhost:3001" target="_blank" rel="noopener">localhost:3001</a>.</p>`,
+    "Which localhost address do I open?",
+    `<p>Always open the <strong>http://localhost:…</strong> address printed on the <strong>“WALL-G is running at…”</strong> line in window 2. It's normally <a href="http://localhost:3000" target="_blank" rel="noopener">localhost:3000</a>, but if an earlier copy is still using that port, WALL-G automatically moves to the next free one (like <strong>3001</strong>) and prints it — that message is normal, not an error. To go back to 3000, close the old window still using it (or press <strong>Control + C</strong> in it).</p>`,
   ],
   [
     "Restart",
